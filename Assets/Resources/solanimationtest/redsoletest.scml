@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<spriter_data scml_version="1.0" generator="BrashMonkey Spriter" generator_version="r10">
+    <folder id="0">
+        <file id="0" name="body.png" width="426" height="351" pivot_x="0.478873" pivot_y="0.458689"/>
+        <file id="1" name="leftarm.png" width="624" height="143" pivot_x="0.892628" pivot_y="0.643357"/>
+        <file id="2" name="leftleg.png" width="507" height="219" pivot_x="0.911243" pivot_y="0.826484"/>
+        <file id="3" name="rightarm.png" width="578" height="120" pivot_x="0.882353" pivot_y="0.566667"/>
+        <file id="4" name="rightleg.png" width="566" height="170" pivot_x="0.909894" pivot_y="0.758824"/>
+    </folder>
+    <entity id="0" name="entity_000">
+        <animation id="0" name="NewAnimation" length="1800" interval="100">
+            <mainline>
+                <key id="0" curve_type="bezier" c1="0.494966" c2="0" c3="0.6667" c4="0.6667">
+                    <object_ref id="0" timeline="1" key="0" z_index="0"/>
+                    <object_ref id="1" timeline="3" key="0" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="0" z_index="2"/>
+                    <object_ref id="3" timeline="2" key="0" z_index="3"/>
+                    <object_ref id="4" timeline="4" key="0" z_index="4"/>
+                </key>
+                <key id="1" time="900" curve_type="bezier" c1="0.494966" c2="0" c3="0.6667" c4="0.6667">
+                    <object_ref id="0" timeline="1" key="1" z_index="0"/>
+                    <object_ref id="1" timeline="3" key="1" z_index="1"/>
+                    <object_ref id="2" timeline="0" key="1" z_index="2"/>
+                    <object_ref id="3" timeline="2" key="1" z_index="3"/>
+                    <object_ref id="4" timeline="4" key="1" z_index="4"/>
+                </key>
+            </mainline>
+            <timeline id="0" name="body">
+                <key id="0" curve_type="bezier" c1="0.409396" c2="0" c3="0.6667" c4="0.6667">
+                    <object folder="0" file="0" x="341.565936" y="209.245122"/>
+                </key>
+                <key id="1" time="900" curve_type="bezier" c1="0.243289" c2="0.995261" c3="0.6667" c4="0.6667" spin="-1">
+                    <object folder="0" file="0" x="341.565936" y="222.065635" angle="2.568764" scale_x="1"/>
+                </key>
+            </timeline>
+            <timeline id="1" name="leftarm">
+                <key id="0" curve_type="bezier" c1="0.402685" c2="0" c3="0.6667" c4="0.6667" spin="-1">
+                    <object folder="0" file="1" x="379.641509" y="252.773585"/>
+                </key>
+                <key id="1" time="900" curve_type="bezier" c1="0.345638" c2="0.127962" c3="0.6667" c4="0.6667">
+                    <object folder="0" file="1" x="379.641509" y="265.594098" angle="358.883915" scale_y="1"/>
+                </key>
+            </timeline>
+            <timeline id="2" name="rightarm">
+                <key id="0" spin="-1">
+                    <object folder="0" file="3" x="335.849057" y="245.283019" angle="358.898294"/>
+                </key>
+                <key id="1" time="900">
+                    <object folder="0" file="3" x="335.849057" y="258.103532" angle="353.290163" scale_x="1" scale_y="1"/>
+                </key>
+            </timeline>
+            <timeline id="3" name="leftleg">
+                <key id="0" curve_type="bezier" c1="0.25" c2="0.995261" c3="0.6667" c4="0.6667" spin="-1">
+                    <object folder="0" file="2" x="258.490566" y="122.641509"/>
+                </key>
+                <key id="1" time="900" curve_type="bezier" c1="0.3333" c2="0.3333" c3="0.637584" c4="0.995261">
+                    <object folder="0" file="2" x="258.490566" y="135.462022" angle="355.236358" scale_x="1" scale_y="1"/>
+                </key>
+            </timeline>
+            <timeline id="4" name="rightleg">
+                <key id="0" curve_type="bezier" c1="0.3333" c2="0.3333" c3="0.644295" c4="0.834123">
+                    <object folder="0" file="4" x="266.037736" y="139.622642"/>
+                </key>
+                <key id="1" time="900" curve_type="bezier" c1="0.3333" c2="0.3333" c3="0.6493" c4="0.819905" spin="-1">
+                    <object folder="0" file="4" x="266.037736" y="152.443154" angle="6.170175" scale_x="1" scale_y="1"/>
+                </key>
+            </timeline>
+        </animation>
+    </entity>
+</spriter_data>
