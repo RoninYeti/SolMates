@@ -24,7 +24,6 @@ namespace SolMates
         // Update is called once per frame
         void Update()
         {
-            print((sunCenterOfMass.position - transform.position).normalized * force);
             rb.AddForce((sunCenterOfMass.position - transform.position).normalized * force);
         }
     }
