@@ -10,18 +10,24 @@ public class FriendlySoul : MonoBehaviour {
     [SerializeField]
     Color[] colors;
     Color color;
+   public  float size;
+    public Transform player;
 	// Use this for initialization
 	void Start () {
-        transform.localScale *= Random.Range(minimumScale, maximumScale);
-        color = colors[Random.Range(0, colors.Length - 1)];
+        size = Random.Range(minimumScale, maximumScale);
+        transform.localScale *= size;
+       // color = colors[Random.Range(0, colors.Length - 1)];
         foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
         {
             sr.color = color;
         }
-	}
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+
+      transform.LookAt(player, transform.up);
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        transform.LookAt(GameObject.FindGameObjectWithTag("Player").transform,transform.up);
+  
 	}
 }
