@@ -23,17 +23,37 @@ public class SoulAction : MonoBehaviour {
     public float samplesize = .2f;
     //reference to the player
     private Transform player;
+    public float CounterSizeTime = .1f;
+  
+    public int SoulWorth = 0;
     void Awake()
     {
         friendsoulref = GetComponent<FriendlySoul>();
         anim = GetComponent<Animator>();
         soulScale = transform.localScale;
         player = friendsoulref.player;
+        anim.enabled = false;
+
     }
 
     void Start()
     {
-        
+        float size = Mathf.RoundToInt(friendsoulref.size);
+   
+
+        switch (SoulWorth)
+        {
+            case 1:
+                SoulWorth = Random.Range(1, 4);
+                break;
+            case 2:
+                SoulWorth = Random.Range(4, 8);
+                break;
+            case 3:
+                SoulWorth = Random.Range(8, 11);
+                break;
+        }
+
         waitTimebySize = friendsoulref.size;
     }
 
@@ -47,8 +67,10 @@ public class SoulAction : MonoBehaviour {
         if (!clean)
         {
             lookedAt = true;
+            anim.enabled = true;
             anim.SetBool("looked", true);
             StartCoroutine(cleanUp());
+      //      print("it's being looked at");
         }
 
 
@@ -57,16 +79,17 @@ public class SoulAction : MonoBehaviour {
     IEnumerator cleanUp()
     {
       //  print(waitTimebySize);
-        while (lookedAt && counter < waitTimebySize)
+        while (lookedAt && (counter < waitTimebySize))
         {
-            yield return new WaitForSeconds(.1f);
-            counter += .1f;
-           
-         //   print(counter);
+            yield return new WaitForSeconds(CounterSizeTime);
+            counter += CounterSizeTime;
+            //print(lookedAt);
+            //print(counter);
         }
-        if (counter > waitTimebySize)
+        if ((counter > waitTimebySize))
         {
             anim.SetBool("looked", false);
+        //    print(lookedAt);
             clean = true;
             PlayerStats.cleansouls++;
             float finalsize;
@@ -121,10 +144,11 @@ public class SoulAction : MonoBehaviour {
                     yield return new WaitForSeconds(.02f);
                 }
             }
+            yield return new WaitForSeconds(1);
+            GameObject cleanSoul = Instantiate(cleanSoulobj, transform.position, transform.rotation) as GameObject;
+            Destroy(gameObject);
         }
-        yield return new WaitForSeconds(1);
-        GameObject cleanSoul = Instantiate(cleanSoulobj, transform.position, transform.rotation) as GameObject;
-        Destroy(gameObject);
+
     }
 
     public void Unlook()
@@ -134,7 +158,8 @@ public class SoulAction : MonoBehaviour {
             counter = 0;
             anim.SetBool("looked", false);
             lookedAt = false;
-          //  StopCoroutine(cleanUp());
+            anim.enabled = false;
+            StopCoroutine(cleanUp());
         }
 
     }

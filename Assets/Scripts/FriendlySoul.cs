@@ -6,21 +6,29 @@ public class FriendlySoul : MonoBehaviour {
     [SerializeField]
     float minimumScale = 0.5f;
     [SerializeField]
-    float maximumScale = 2f;
+    float maximumScale = 3f;
     [SerializeField]
     Color[] colors;
-    Color color;
+    Color finalcolor;
    public  float size;
     public Transform player;
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+
+    private void Awake()
+    {
         size = Random.Range(minimumScale, maximumScale);
-        transform.localScale *= size;
-       // color = colors[Random.Range(0, colors.Length - 1)];
+        int colorchosen = Random.Range(0, colors.Length);
+        finalcolor = colors[colorchosen];
         foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
         {
-            sr.color = color;
+            sr.color = finalcolor;
         }
+    }
+    void Start () {
+       
+        transform.localScale *= size;
+       // color = colors[Random.Range(0, colors.Length - 1)];
+
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
       transform.LookAt(player, transform.up);

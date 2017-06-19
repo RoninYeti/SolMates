@@ -8,6 +8,7 @@ public class CleanSoulAction : MonoBehaviour {
     public float WaitBeforeFollow;
     public bool follow = false;
     private Transform chosenFollow;
+    public float followSpeed = 3;
     void OnEnable()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -16,8 +17,11 @@ public class CleanSoulAction : MonoBehaviour {
 
     IEnumerator becomeFollower()
     {
-        yield return new WaitForSeconds(WaitBeforeFollow);
         PlayerStats stats = player.GetComponent<PlayerStats>();
+        stats.cleanSoulsList.Add(this.gameObject);
+
+        yield return new WaitForSeconds(WaitBeforeFollow);
+
         int i = Random.Range(0, stats.followTrans.Count);
         chosenFollow = stats.followTrans[i];
         follow = true;
@@ -27,7 +31,7 @@ public class CleanSoulAction : MonoBehaviour {
     {
         if(follow)
         {
-            transform.position = Vector3.MoveTowards(transform.position,chosenFollow.position,0.5f);
+            transform.position = Vector3.MoveTowards(transform.position, chosenFollow.position, followSpeed);
         }
     }
 

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour {
     [SerializeField]
-    GameObject soulPrefab;
+    List<GameObject> Souls = new List<GameObject>();
+   
     [SerializeField]
     float timeBetweenSpawns = 5;
     float timer;
@@ -14,8 +15,13 @@ public class Spawner : MonoBehaviour {
     float maxDistance = 250f;
     [SerializeField]
     int soulsToSpawn;
-	// Use this for initialization
-	void Start () {
+
+   private GameObject soulPrefab;
+    // Use this for initialization
+    void Start () {
+
+        int choice = Random.Range(0,Souls.Count);
+        soulPrefab = Souls[choice].gameObject;
         for (int i = 1; i < soulsToSpawn; i++) {
             GameObject newSoul = Instantiate(soulPrefab);
             newSoul.transform.position = Random.onUnitSphere * ((maxDistance - minDistance) * Random.value + minDistance);
