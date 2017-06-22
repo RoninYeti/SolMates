@@ -9,14 +9,16 @@ public class CleanSoulAction : MonoBehaviour {
     public bool follow = false;
     private Transform chosenFollow;
     public float followSpeed = 3;
-    void OnEnable()
-    {
+
+    public AudioClip absorbSoul;
+    private AudioSource source;
+
+    void OnEnable() {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         StartCoroutine(becomeFollower());
     }
 
-    IEnumerator becomeFollower()
-    {
+    IEnumerator becomeFollower() {
         PlayerStats stats = player.GetComponent<PlayerStats>();
         stats.cleanSoulsList.Add(this.gameObject);
 
@@ -29,10 +31,9 @@ public class CleanSoulAction : MonoBehaviour {
 
     void Update()
     {
-        if(follow)
-        {
+        if (follow) {
             transform.position = Vector3.MoveTowards(transform.position, chosenFollow.position, followSpeed);
+            //source.PlayOneShot(absorbSoul);                                                                        Fix this sound!!
         }
     }
-
 }
