@@ -32,7 +32,7 @@ public class SoulAction : MonoBehaviour {
         anim = GetComponent<Animator>();
         soulScale = transform.localScale;
         player = friendsoulref.player;
-        anim.enabled = false;
+      //  anim.enabled = false;
 
     }
 

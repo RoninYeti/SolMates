@@ -20,9 +20,12 @@ public class Spawner : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        int choice = Random.Range(0,Souls.Count);
-        soulPrefab = Souls[choice].gameObject;
+
         for (int i = 1; i < soulsToSpawn; i++) {
+
+            int choice = Random.Range(0, Souls.Count);
+            soulPrefab = Souls[choice].gameObject;
+
             GameObject newSoul = Instantiate(soulPrefab);
             newSoul.transform.position = Random.onUnitSphere * ((maxDistance - minDistance) * Random.value + minDistance);
         }
