@@ -2,37 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour {
+namespace soulmates
+{
 
-    [SerializeField]
-    List<GameObject> Souls = new List<GameObject>();
-   
-    [SerializeField]
-    //float timeBetweenSpawns = 5;
-    float timer;
+    public class Spawner : MonoBehaviour
+    {
 
-    [SerializeField]
-    float minDistance = 200f;
+        [SerializeField]
+        List<GameObject> Souls = new List<GameObject>();
 
-    [SerializeField]
-    float maxDistance = 250f;
+        [SerializeField]
+        float minDistance = 200f;
 
-    [SerializeField]
-    int soulsToSpawn;
+        [SerializeField]
+        float maxDistance = 250f;
 
-   private GameObject soulPrefab;
+        [SerializeField]
+        int soulsToSpawn;
 
-    void Start () {
-        for (int i = 1; i < soulsToSpawn; i++) {
+        private GameObject soulPrefab;
 
-            int choice = Random.Range(0, Souls.Count);
-            soulPrefab = Souls[choice].gameObject;
+        void Start()
+        {
+            for (int i = 1; i < soulsToSpawn; i++)
+            {
 
-            GameObject newSoul = Instantiate(soulPrefab);
-            newSoul.transform.position = Random.onUnitSphere * ((maxDistance - minDistance) * Random.value + minDistance);
+                int choice = Random.Range(0, Souls.Count);
+                soulPrefab = Souls[choice].gameObject;
+
+                GameObject newSoul = Instantiate(soulPrefab);
+                newSoul.transform.position = Random.onUnitSphere * ((maxDistance - minDistance) * Random.value + minDistance);
+            }
         }
-	}
-	
-	void Update () {	
-	}
+
+        void Update()
+        {
+        }
+    }
+
 }

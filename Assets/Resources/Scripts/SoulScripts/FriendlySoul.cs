@@ -2,38 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FriendlySoul : MonoBehaviour {
+namespace soulmates
+{
 
-    [SerializeField]
-    float minimumScale = 0.5f;
+    public class FriendlySoul : MonoBehaviour
+    {
 
-    [SerializeField]
-    float maximumScale = 3f;
+        [SerializeField]
+        float minimumScale = 0.5f;
 
-    [SerializeField]
-    Color[] colors;
-    Color finalcolor;
-    public  float size;
-    public Transform player;
+        [SerializeField]
+        float maximumScale = 3f;
 
-    private void Awake() {
-        size = Random.Range(minimumScale, maximumScale);
-        int colorchosen = Random.Range(0, colors.Length);
-        finalcolor = colors[colorchosen];
-        foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>()) {
-            sr.color = finalcolor;
+        [SerializeField]
+        Color[] colors;
+        Color finalcolor;
+        public float size;
+        public Transform player;
+
+        private void Awake()
+        {
+            size = Random.Range(minimumScale, maximumScale);
+            int colorchosen = Random.Range(0, colors.Length);
+            finalcolor = colors[colorchosen];
+            foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
+            {
+                sr.color = finalcolor;
+            }
+        }
+
+        void Start()
+        {
+            transform.localScale *= size;
+            //color = colors[Random.Range(0, colors.Length - 1)];
+
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+
+            transform.LookAt(player, transform.up);
+        }
+
+        void Update()
+        {
         }
     }
-
-    void Start () {
-       transform.localScale *= size;
-       //color = colors[Random.Range(0, colors.Length - 1)];
-
-       player = GameObject.FindGameObjectWithTag("Player").transform;
-
-       transform.LookAt(player, transform.up);
-    }
-	
-	void Update () {
-	}
 }
