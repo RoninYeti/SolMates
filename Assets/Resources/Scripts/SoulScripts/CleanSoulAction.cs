@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace soulmates
-{
-
-    public class CleanSoulAction : MonoBehaviour
-    {
+namespace solmates {
+    public class CleanSoulAction : MonoBehaviour {
 
         public Transform player;
         public float WaitBeforeFollow;
@@ -14,33 +11,31 @@ namespace soulmates
         private Transform chosenFollow;
         public float followSpeed = 3;
 
+        public AudioSource aSource;
         public AudioClip absorbSoul;
-        private AudioSource source;
+        public AudioClip cleansedSoul;
 
-        void OnEnable()
-        {
+        void OnEnable() {
             player = GameObject.FindGameObjectWithTag("Player").transform;
             StartCoroutine(becomeFollower());
         }
 
-        IEnumerator becomeFollower()
-        {
+        IEnumerator becomeFollower() {
             PlayerStats stats = player.GetComponent<PlayerStats>();
             stats.cleanSoulsList.Add(this.gameObject);
+            //aSource.PlayOneShot(cleansedSoul);                                         Fix This Sound!!!
 
             yield return new WaitForSeconds(WaitBeforeFollow);
 
+            //aSource.PlayOneShot(absorbSoul);                                           Fix This Sound!!!
             int i = Random.Range(0, stats.followTrans.Count);
             chosenFollow = stats.followTrans[i];
             follow = true;
         }
 
-        void Update()
-        {
-            if (follow)
-            {
+        void Update() {
+            if (follow) {
                 transform.position = Vector3.MoveTowards(transform.position, chosenFollow.position, followSpeed);
-                //source.PlayOneShot(absorbSoul);                                                                        Fix this sound!!
             }
         }
     }

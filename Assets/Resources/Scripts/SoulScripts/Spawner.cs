@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace soulmates
-{
-
-    public class Spawner : MonoBehaviour
-    {
+namespace solmates {
+    public class Spawner : MonoBehaviour {
 
         [SerializeField]
         List<GameObject> Souls = new List<GameObject>();
@@ -22,10 +19,8 @@ namespace soulmates
 
         private GameObject soulPrefab;
 
-        void Start()
-        {
-            for (int i = 1; i < soulsToSpawn; i++)
-            {
+        void Start() {
+            for (int i = 1; i < soulsToSpawn; i++) {
 
                 int choice = Random.Range(0, Souls.Count);
                 soulPrefab = Souls[choice].gameObject;
@@ -35,9 +30,7 @@ namespace soulmates
             }
         }
 
-        void Update()
-        {
+        void Update() {
         }
     }
-
 }

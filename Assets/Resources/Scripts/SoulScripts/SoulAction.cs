@@ -2,11 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace soulmates
-{
-
-    public class SoulAction : MonoBehaviour
-    {
+namespace solmates {
+    public class SoulAction : MonoBehaviour {
 
         //is soul clean?
         public bool clean = false;
@@ -41,25 +38,21 @@ namespace soulmates
         public int SoulWorth = 0;
 
         //sound effects
-        public AudioClip cleansedSoul;
-        private AudioSource source;
+        public AudioSource aSource;
+        public AudioClip cleansingSoul;
 
-        void Awake()
-        {
-            source = GetComponent<AudioSource>();
+        void Awake() {
+            //asource = GetComponent<AudioSource>();
             friendsoulref = GetComponentInParent<FriendlySoul>();
             anim = GetComponent<Animator>();
             soulScale = transform.localScale;
             player = friendsoulref.player;
-            //anim.enabled = false;
         }
 
-        void Start()
-        {
+        void Start() {
             float size = Mathf.RoundToInt(friendsoulref.size);
 
-            switch (SoulWorth)
-            {
+            switch (SoulWorth) {
                 case 1:
                     SoulWorth = Random.Range(1, 4);
                     break;
@@ -74,46 +67,35 @@ namespace soulmates
             waitTimebySize = friendsoulref.size;
         }
 
-        void Update()
-        {
+        void Update() {
         }
 
-        public void Cleaning()
-        {
-            if (!clean && !SoulPurityAction.purSoulmade)
-            {
+        public void Cleaning() {
+            if (!clean && !SoulPurityAction.purSoulmade) {
                 lookedAt = true;
+                //aSource.PlayOneShot(cleansingSoul);                                 Fix This Sound and Loop (perhaps create event in the animator, instead)!!!
                 anim.enabled = true;
                 anim.SetBool("looked", true);
                 StartCoroutine(cleanUp());
-                //print("it's being looked at");
             }
         }
 
-        IEnumerator cleanUp()
-        {
-            //print(waitTimebySize);
-            while (lookedAt && (counter < waitTimebySize))
-            {
+        IEnumerator cleanUp() {
+            while (lookedAt && (counter < waitTimebySize)) {
                 yield return new WaitForSeconds(CounterSizeTime);
                 counter += CounterSizeTime;
-                //print(lookedAt);
-                //print(counter);
             }
 
-            if ((counter > waitTimebySize))
-            {
+            if ((counter > waitTimebySize)) {
                 anim.SetBool("looked", false);
-                //print(lookedAt);
                 clean = true;
                 PlayerStats.cleansouls++;
                 float finalsize;
 
-                if ((soulScale.x > soulScale.y) && (soulScale.x > soulScale.z))
-                {
+                if ((soulScale.x > soulScale.y) && (soulScale.x > soulScale.z)) {
                     finalsize = samplesize * soulScale.x;
-                    while (finalsize < soulScale.x)
-                    {
+
+                    while (finalsize < soulScale.x) {
                         soulScale.x -= .1f;
                         soulScale.y -= .1f;
                         soulScale.z -= .1f;
@@ -126,8 +108,7 @@ namespace soulmates
                 {
                     finalsize = samplesize * soulScale.y;
 
-                    while (finalsize < soulScale.y)
-                    {
+                    while (finalsize < soulScale.y) {
                         soulScale.x -= .1f;
                         soulScale.y -= .1f;
                         soulScale.z -= .1f;
@@ -136,11 +117,10 @@ namespace soulmates
                     }
                 }
 
-                else if ((soulScale.z > soulScale.x) && (soulScale.z > soulScale.y))
-                {
+                else if ((soulScale.z > soulScale.x) && (soulScale.z > soulScale.y)) {
                     finalsize = samplesize * soulScale.z;
-                    while (finalsize < soulScale.z)
-                    {
+
+                    while (finalsize < soulScale.z) {
                         soulScale.x -= .1f;
                         soulScale.y -= .1f;
                         soulScale.z -= .1f;
@@ -149,11 +129,10 @@ namespace soulmates
                     }
                 }
 
-                else
-                {
+                else {
                     finalsize = samplesize * soulScale.z;
-                    while (finalsize < soulScale.z)
-                    {
+
+                    while (finalsize < soulScale.z) {
                         soulScale.x -= .1f;
                         soulScale.y -= .1f;
                         soulScale.z -= .1f;
@@ -165,14 +144,11 @@ namespace soulmates
                 yield return new WaitForSeconds(1);
                 GameObject cleanSoul = Instantiate(cleanSoulobj, transform.position, transform.rotation) as GameObject;
                 Destroy(gameObject);
-                //source.PlayOneShot(cleansedSoul);                                                                                Fix this sound!!
             }
         }
 
-        public void Unlook()
-        {
-            if (counter < waitTimebySize)
-            {
+        public void Unlook() {
+            if (counter < waitTimebySize) {
                 counter = 0;
                 anim.SetBool("looked", false);
                 lookedAt = false;
