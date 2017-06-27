@@ -23,11 +23,11 @@ namespace solmates {
         IEnumerator becomeFollower() {
             PlayerStats stats = player.GetComponent<PlayerStats>();
             stats.cleanSoulsList.Add(this.gameObject);
-            //aSource.PlayOneShot(cleansedSoul);                                         Fix This Sound!!!
+         //   aSource.PlayOneShot(cleansedSoul);                                        
 
             yield return new WaitForSeconds(WaitBeforeFollow);
 
-            //aSource.PlayOneShot(absorbSoul);                                           Fix This Sound!!!
+       //     aSource.PlayOneShot(absorbSoul);                                          
             int i = Random.Range(0, stats.followTrans.Count);
             chosenFollow = stats.followTrans[i];
             follow = true;

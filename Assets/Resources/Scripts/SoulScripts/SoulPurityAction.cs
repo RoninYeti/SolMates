@@ -17,13 +17,14 @@ namespace solmates {
         public float soulSpeed = 3f;
         public bool sendSoulAway = false;
         public float hitdistance = 20f;
-
+        public float waitTimePureSoulCreation =5f;
         public AudioSource aSource;
         public AudioClip pureShot;
         public AudioClip planetHit;
 
         private void Awake() {
             statsRef = GetComponent<PlayerStats>();
+            aSource = GetComponent<AudioSource>();
         }
 
         public void CreatePureSoul() {
@@ -31,7 +32,7 @@ namespace solmates {
         }
 
         IEnumerator WaitThenDestory() {
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(waitTimePureSoulCreation);
             soul = Instantiate(pureSoulObj, spawnTransform.position, spawnTransform.rotation) as GameObject;
             purSoulmade = true;
             soul.transform.parent = transform;
@@ -70,7 +71,7 @@ namespace solmates {
                         planet = rhit.transform.gameObject;
                         soul.transform.parent = null;
                         soul.GetComponent<Animator>().enabled = true;
-                        //aSource.PlayOneShot(pureShot);                                                                                          Fix This Sound!!!
+                        aSource.PlayOneShot(pureShot);                                                                                          
                         StartCoroutine(quickAnim());
                     }
                 }
@@ -82,7 +83,7 @@ namespace solmates {
 
                 if (dis < hitdistance) {
                     planet = null;
-                    //aSource.PlayOneShot(planetHit);                                                                                              Fix This Sound!!!
+                    aSource.PlayOneShot(planetHit);                                                                                           
                     Destroy(soul.gameObject);
                     purSoulmade = false;
                     soulmaking = false;

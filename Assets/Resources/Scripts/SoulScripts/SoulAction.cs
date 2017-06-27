@@ -42,7 +42,7 @@ namespace solmates {
         public AudioClip cleansingSoul;
 
         void Awake() {
-            //asource = GetComponent<AudioSource>();
+            aSource = GetComponent<AudioSource>();
             friendsoulref = GetComponentInParent<FriendlySoul>();
             anim = GetComponent<Animator>();
             soulScale = transform.localScale;
@@ -73,7 +73,7 @@ namespace solmates {
         public void Cleaning() {
             if (!clean && !SoulPurityAction.purSoulmade) {
                 lookedAt = true;
-                //aSource.PlayOneShot(cleansingSoul);                                 Fix This Sound and Loop (perhaps create event in the animator, instead)!!!
+                aSource.PlayOneShot(cleansingSoul);                              
                 anim.enabled = true;
                 anim.SetBool("looked", true);
                 StartCoroutine(cleanUp());
