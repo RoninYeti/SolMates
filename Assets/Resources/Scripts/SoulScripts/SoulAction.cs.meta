@@ -1,10 +1,15 @@
 fileFormatVersion: 2
 guid: 704585bc23703054f91e685135886b0d
-timeCreated: 1497493353
+timeCreated: 1498606176
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - friendsoulref: {instanceID: 0}
+  - cleanSoulobj: {instanceID: 0}
+  - aSource: {instanceID: 0}
+  - cleansingSoul: {instanceID: 0}
+  - cleansedSoul: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

@@ -40,6 +40,7 @@ namespace solmates {
         //sound effects
         public AudioSource aSource;
         public AudioClip cleansingSoul;
+        public AudioClip cleansedSoul;
 
         void Awake() {
             aSource = GetComponent<AudioSource>();
@@ -141,7 +142,8 @@ namespace solmates {
                     }
                 }
 
-                yield return new WaitForSeconds(1);
+                aSource.PlayOneShot(cleansedSoul);
+                yield return new WaitForSeconds(1.5f);
                 GameObject cleanSoul = Instantiate(cleanSoulobj, transform.position, transform.rotation) as GameObject;
                 Destroy(gameObject);
             }
