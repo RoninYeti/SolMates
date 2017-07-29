@@ -29,8 +29,5 @@ namespace solmates {
                 newSoul.transform.position = Random.onUnitSphere * ((maxDistance - minDistance) * Random.value + minDistance);
             }
         }
-
-        void Update() {
-        }
     }
 }

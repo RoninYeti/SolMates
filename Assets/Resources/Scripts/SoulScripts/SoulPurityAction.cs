@@ -14,6 +14,11 @@ namespace solmates {
         public GameObject pureSoulObj;
         public GameObject soul;
         public GameObject planet;
+        public GameObject planetParn;
+        public GameObject planet1;
+        public GameObject planet2;
+        public GameObject planet3;
+        public GameObject planet4;
         public float soulSpeed = 3f;
         public bool sendSoulAway = false;
         public float hitdistance = 20f;
@@ -34,6 +39,11 @@ namespace solmates {
         IEnumerator WaitThenDestory() {
             yield return new WaitForSeconds(waitTimePureSoulCreation);
             soul = Instantiate(pureSoulObj, spawnTransform.position, spawnTransform.rotation) as GameObject;
+            planetParn.GetComponent<Light>().enabled = true;
+            planet1.GetComponent<Light>().enabled = true;
+            planet2.GetComponent<Light>().enabled = true;
+            planet3.GetComponent<Light>().enabled = true;
+            planet4.GetComponent<Light>().enabled = true;
             purSoulmade = true;
             soul.transform.parent = transform;
             PlayerStats.cleansouls -= maxSoulAmount;
@@ -49,6 +59,7 @@ namespace solmates {
         }
 
         IEnumerator quickAnim() {
+            purSoulmade = false;
             yield return new WaitForSeconds(2f);
             soul.GetComponent<Animator>().enabled = false;
             sendSoulAway = true;
@@ -58,7 +69,6 @@ namespace solmates {
             RaycastHit rhit;
 
             if (PlayerStats.cleansouls >= maxSoulAmount && !soulmaking) {
-
                 soulmaking = true;
                 CreatePureSoul();
             }
@@ -85,7 +95,11 @@ namespace solmates {
                     planet = null;
                     aSource.PlayOneShot(planetHit);                                                                                           
                     Destroy(soul.gameObject);
-                    purSoulmade = false;
+                    planetParn.GetComponent<Light>().enabled = false;
+                    planet1.GetComponent<Light>().enabled = false;
+                    planet2.GetComponent<Light>().enabled = false;
+                    planet3.GetComponent<Light>().enabled = false;
+                    planet4.GetComponent<Light>().enabled = false;
                     soulmaking = false;
                     sendSoulAway = false;
                 }

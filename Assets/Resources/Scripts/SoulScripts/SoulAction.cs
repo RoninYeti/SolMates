@@ -75,7 +75,7 @@ namespace solmates {
             if (!clean && !SoulPurityAction.purSoulmade) {
                 lookedAt = true;
                 aSource.PlayOneShot(cleansingSoul);                              
-                anim.enabled = true;
+                //anim.enabled = true;
                 anim.SetBool("looked", true);
                 StartCoroutine(cleanUp());
             }
@@ -154,7 +154,7 @@ namespace solmates {
                 counter = 0;
                 anim.SetBool("looked", false);
                 lookedAt = false;
-                anim.enabled = false;
+                //anim.enabled = false;
                 StopCoroutine(cleanUp());
             }
         }
