@@ -20,6 +20,7 @@ namespace solmates {
         public GameObject planet3;
         public GameObject planet4;
         public float soulSpeed = 3f;
+        public float ToReadySpeed = 3f;
         public bool sendSoulAway = false;
         public float hitdistance = 20f;
         public float waitTimePureSoulCreation =5f;
@@ -58,10 +59,18 @@ namespace solmates {
             }
         }
 
-        IEnumerator quickAnim() {
+        IEnumerator ReadyToFly(Ray line) {
             purSoulmade = false;
-            yield return new WaitForSeconds(2f);
-            soul.GetComponent<Animator>().enabled = false;
+            Vector3 vec = line.GetPoint(2f);
+            float dis = Vector3.Distance(soul.transform.position, vec);
+            while (dis > .2f)
+            {
+                soul.transform.position = Vector3.MoveTowards(soul.transform.position, vec,Time.deltaTime * ToReadySpeed);
+                yield return new WaitForSeconds(.1f);
+                dis = Vector3.Distance(soul.transform.position, vec);
+            }
+
+            yield return new WaitForSeconds(1f);
             sendSoulAway = true;
         }
 
@@ -78,11 +87,12 @@ namespace solmates {
                 if (Input.GetMouseButtonDown(0)) {
 
                     if (Physics.Raycast(transform.position, Camera.main.transform.forward, out rhit, Mathf.Infinity, lmask)) {
+                        Ray quickRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward *5f);
                         planet = rhit.transform.gameObject;
                         soul.transform.parent = null;
-                        soul.GetComponent<Animator>().enabled = true;
+                      
                         aSource.PlayOneShot(pureShot);                                                                                          
-                        StartCoroutine(quickAnim());
+                        StartCoroutine(ReadyToFly(quickRay));
                     }
                 }
             }
