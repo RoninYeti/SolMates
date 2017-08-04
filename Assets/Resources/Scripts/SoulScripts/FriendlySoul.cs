@@ -13,6 +13,7 @@ namespace solmates {
 
         [SerializeField]
         Color[] colors;
+
         Color finalcolor;
         public float size;
         public Transform player;
@@ -31,9 +32,6 @@ namespace solmates {
             transform.localScale *= size;
             player = GameObject.FindGameObjectWithTag("Player").transform;
             transform.LookAt(player, transform.up);
-        }
-
-        void Update() {
         }
     }
 }

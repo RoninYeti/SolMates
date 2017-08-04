@@ -68,9 +68,6 @@ namespace solmates {
             waitTimebySize = friendsoulref.size;
         }
 
-        void Update() {
-        }
-
         public void Cleaning() {
             if (!clean && !SoulPurityAction.purSoulmade) {
                 lookedAt = true;

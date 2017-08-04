@@ -14,6 +14,7 @@ namespace solmates {
         public GameObject pureSoulObj;
         public GameObject soul;
         public GameObject planet;
+        public GameObject sunLight;
         public GameObject planetParn;
         public GameObject planet1;
         public GameObject planet2;
@@ -40,6 +41,7 @@ namespace solmates {
         IEnumerator WaitThenDestory() {
             yield return new WaitForSeconds(waitTimePureSoulCreation);
             soul = Instantiate(pureSoulObj, spawnTransform.position, spawnTransform.rotation) as GameObject;
+            sunLight.GetComponent<Light>().enabled = false;
             planetParn.GetComponent<Light>().enabled = true;
             planet1.GetComponent<Light>().enabled = true;
             planet2.GetComponent<Light>().enabled = true;
@@ -105,6 +107,7 @@ namespace solmates {
                     planet = null;
                     aSource.PlayOneShot(planetHit);                                                                                           
                     Destroy(soul.gameObject);
+                    sunLight.GetComponent<Light>().enabled = true;
                     planetParn.GetComponent<Light>().enabled = false;
                     planet1.GetComponent<Light>().enabled = false;
                     planet2.GetComponent<Light>().enabled = false;
