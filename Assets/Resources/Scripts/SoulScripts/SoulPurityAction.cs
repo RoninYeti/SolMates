@@ -8,7 +8,7 @@ namespace solmates {
         public Transform spawnTransform;
         private PlayerStats statsRef;
         private bool soulmaking = false;
-        public int maxSoulAmount = 3;
+        public static int maxSoulAmount = 3;
         public static bool purSoulmade = false;
         public LayerMask lmask;
         public GameObject pureSoulObj;
@@ -68,11 +68,11 @@ namespace solmates {
             while (dis > .2f)
             {
                 soul.transform.position = Vector3.MoveTowards(soul.transform.position, vec,Time.deltaTime * ToReadySpeed);
-                yield return new WaitForSeconds(.1f);
+                yield return new WaitForSeconds(.01f);
                 dis = Vector3.Distance(soul.transform.position, vec);
             }
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.1f);
             sendSoulAway = true;
         }
 

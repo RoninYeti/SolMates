@@ -67,9 +67,9 @@ namespace solmates {
 
             waitTimebySize = friendsoulref.size;
         }
-
+        //changes made
         public void Cleaning() {
-            if (!clean && !SoulPurityAction.purSoulmade) {
+            if (!clean && PlayerStats.cleansouls < SoulPurityAction.maxSoulAmount) {
                 lookedAt = true;
                 aSource.PlayOneShot(cleansingSoul);                              
                 //anim.enabled = true;
@@ -140,7 +140,7 @@ namespace solmates {
                 }
 
                 aSource.PlayOneShot(cleansedSoul);
-                yield return new WaitForSeconds(1.5f);
+                yield return new WaitForSeconds(.3f);
                 GameObject cleanSoul = Instantiate(cleanSoulobj, transform.position, transform.rotation) as GameObject;
                 Destroy(gameObject);
             }
