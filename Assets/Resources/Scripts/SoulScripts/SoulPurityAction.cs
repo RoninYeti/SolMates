@@ -20,7 +20,7 @@ namespace solmates {
         public GameObject planet2;
         public GameObject planet3;
         public GameObject planet4;
-        public float soulSpeed = 3f;
+        public float soulSpeed = 2f;
         public float ToReadySpeed = 3f;
         public bool sendSoulAway = false;
         public float hitdistance = 20f;
@@ -72,7 +72,7 @@ namespace solmates {
                 dis = Vector3.Distance(soul.transform.position, vec);
             }
 
-            yield return new WaitForSeconds(.1f);
+            yield return new WaitForSeconds(1.5f);
             sendSoulAway = true;
         }
 

@@ -140,7 +140,7 @@ namespace solmates {
                 }
 
                 aSource.PlayOneShot(cleansedSoul);
-                yield return new WaitForSeconds(.3f);
+                yield return new WaitForSeconds(1.3f);
                 GameObject cleanSoul = Instantiate(cleanSoulobj, transform.position, transform.rotation) as GameObject;
                 Destroy(gameObject);
             }
