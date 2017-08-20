@@ -28,7 +28,8 @@ namespace solmates {
         public AudioSource aSource;
         public AudioClip pureShot;
         public AudioClip planetHit;
-
+        private float intensity;
+        public float lightTransitionSpeed = .05f;
         private void Awake() {
             statsRef = GetComponent<PlayerStats>();
             aSource = GetComponent<AudioSource>();
@@ -39,26 +40,36 @@ namespace solmates {
         }
 
         IEnumerator WaitThenDestory() {
+
+            for (int i = 0; i < maxSoulAmount; i++)
+            {
+                if (statsRef.cleanSoulsList.Count != 0)
+                {
+                    Destroy(statsRef.cleanSoulsList[0]);
+                    statsRef.cleanSoulsList.RemoveAt(0);
+                }
+            }
+
             yield return new WaitForSeconds(waitTimePureSoulCreation);
+            purSoulmade = true;
             soul = Instantiate(pureSoulObj, spawnTransform.position, spawnTransform.rotation) as GameObject;
-            sunLight.GetComponent<Light>().enabled = false;
+            float tempintensity;
+            tempintensity = sunLight.GetComponent<Light>().intensity;
+            intensity = sunLight.GetComponent<Light>().intensity;
+            while (tempintensity > .01f)
+            {
+                tempintensity -= .01f;
+                yield return new WaitForSeconds(lightTransitionSpeed);
+                sunLight.GetComponent<Light>().intensity = tempintensity;
+            }
             planetParn.GetComponent<Light>().enabled = true;
             planet1.GetComponent<Light>().enabled = true;
             planet2.GetComponent<Light>().enabled = true;
             planet3.GetComponent<Light>().enabled = true;
             planet4.GetComponent<Light>().enabled = true;
-            purSoulmade = true;
+  
             soul.transform.parent = transform;
             PlayerStats.cleansouls -= maxSoulAmount;
-            //print(PlayerStats.cleansouls + " clean soul static variable");
-            //print(statsRef.cleanSoulsList.Count + " clean soul count");
-
-            for (int i = 0; i < maxSoulAmount; i++) {
-                if (statsRef.cleanSoulsList.Count != 0) {
-                    Destroy(statsRef.cleanSoulsList[0]);
-                    statsRef.cleanSoulsList.RemoveAt(0);
-                }
-            }
         }
 
         IEnumerator ReadyToFly(Ray line) {
@@ -114,8 +125,21 @@ namespace solmates {
                     planet3.GetComponent<Light>().enabled = false;
                     planet4.GetComponent<Light>().enabled = false;
                     soulmaking = false;
+                    StartCoroutine(bringBackUp());
                     sendSoulAway = false;
                 }
+            }
+        }
+
+        IEnumerator bringBackUp()
+        {
+            float tempintensity;
+            tempintensity = sunLight.GetComponent<Light>().intensity;
+            while (tempintensity<=intensity)
+            {
+                tempintensity += .01f;
+                sunLight.GetComponent<Light>().intensity = tempintensity;
+                yield return new WaitForSeconds(lightTransitionSpeed);
             }
         }
     }
