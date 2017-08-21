@@ -72,7 +72,7 @@ namespace solmates {
             if (!clean && PlayerStats.cleansouls < SoulPurityAction.maxSoulAmount) {
                 lookedAt = true;
                 aSource.PlayOneShot(cleansingSoul);                              
-                //anim.enabled = true;
+              
                 anim.SetBool("looked", true);
                 StartCoroutine(cleanUp());
             }
