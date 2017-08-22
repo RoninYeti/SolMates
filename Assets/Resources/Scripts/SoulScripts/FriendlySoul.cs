@@ -6,30 +6,27 @@ namespace solmates {
     public class FriendlySoul : MonoBehaviour {
 
         [SerializeField]
-        float minimumScale = 0.5f;
-
-        [SerializeField]
-        float maximumScale = 3f;
-
-        [SerializeField]
         Color[] colors;
 
-        Color finalcolor;
-        public float size;
+        public  Color finalcolor;
         public Transform player;
+        public float size;
 
+        public float minSize=.5f;
+        public float maxSize=3f;
         private void Awake() {
-            size = Random.Range(minimumScale, maximumScale);
+   
+  
             int colorchosen = Random.Range(0, colors.Length);
             finalcolor = colors[colorchosen];
-
+            size = Random.Range(minSize, maxSize);
             foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>()) {
                 sr.color = finalcolor;
             }
         }
 
         void Start() {
-            transform.localScale *= size;
+           // transform.localScale *= size;
             player = GameObject.FindGameObjectWithTag("Player").transform;
             transform.LookAt(player, transform.up);
         }

@@ -8,8 +8,7 @@ namespace solmates {
         public static int cleansouls;
         public GameObject playercir;
 
-        //public AudioSource source;
-        //public AudioClip [Put it here];
+        public AudioSource source;
 
         public List<Transform> followTrans = new List<Transform>();
         public List<AudioClip> aclips = new List<AudioClip>();

@@ -7,8 +7,9 @@ namespace solmates {
 
         public Transform spawnTransform;
         private PlayerStats statsRef;
-        private bool soulmaking = false;
+        public static bool PureSoulMaking = false;
         public static int maxSoulAmount = 3;
+    
         public static bool purSoulmade = false;
         public LayerMask lmask;
         public GameObject pureSoulObj;
@@ -39,7 +40,13 @@ namespace solmates {
             StartCoroutine(WaitThenDestory());
         }
 
+// will create the souls after getting to the follow points;
         IEnumerator WaitThenDestory() {
+            
+            while(PlayerStats.cleansouls<maxSoulAmount)
+            {
+                yield return new WaitForSeconds(.01f);
+            }
 
             for (int i = 0; i < maxSoulAmount; i++)
             {
@@ -49,6 +56,7 @@ namespace solmates {
                     statsRef.cleanSoulsList.RemoveAt(0);
                 }
             }
+            PlayerStats.cleansouls -= maxSoulAmount;
 
             yield return new WaitForSeconds(waitTimePureSoulCreation);
             purSoulmade = true;
@@ -68,8 +76,8 @@ namespace solmates {
             planet3.GetComponent<Light>().enabled = true;
             planet4.GetComponent<Light>().enabled = true;
   
-            soul.transform.parent = transform;
-            PlayerStats.cleansouls -= maxSoulAmount;
+            soul.transform.parent = spawnTransform;
+          
         }
 
         IEnumerator ReadyToFly(Ray line) {
@@ -90,8 +98,9 @@ namespace solmates {
         void Update() {
             RaycastHit rhit;
 
-            if (PlayerStats.cleansouls >= maxSoulAmount && !soulmaking) {
-                soulmaking = true;
+            if (statsRef.cleanSoulsList.Count >= maxSoulAmount && !PureSoulMaking) {
+                PureSoulMaking = true;
+                print(PureSoulMaking);
                 CreatePureSoul();
             }
 
@@ -124,7 +133,7 @@ namespace solmates {
                     planet2.GetComponent<Light>().enabled = false;
                     planet3.GetComponent<Light>().enabled = false;
                     planet4.GetComponent<Light>().enabled = false;
-                    soulmaking = false;
+                    
                     StartCoroutine(bringBackUp());
                     sendSoulAway = false;
                 }
@@ -141,6 +150,7 @@ namespace solmates {
                 sunLight.GetComponent<Light>().intensity = tempintensity;
                 yield return new WaitForSeconds(lightTransitionSpeed);
             }
+            PureSoulMaking = false;
         }
     }
 }

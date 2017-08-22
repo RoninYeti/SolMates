@@ -10,7 +10,8 @@ namespace solmates {
         public bool follow = false;
         private Transform chosenFollow;
         public float followSpeed = 3;
-
+        private bool closeByFollow = false;
+        public float followdisMin = 20f;
         void OnEnable() {
             player = GameObject.FindGameObjectWithTag("Player").transform;
             StartCoroutine(becomeFollower());
@@ -30,7 +31,15 @@ namespace solmates {
         void Update() {
             if (follow) {
                 transform.position = Vector3.MoveTowards(transform.position, chosenFollow.position, followSpeed);
+                float dis = Vector3.Distance(transform.position, chosenFollow.position);
+                if (dis < followdisMin && !closeByFollow)
+                {
+                    closeByFollow = true;
+                    PlayerStats.cleansouls++;
+                }
             }
+
+
         }
     }
 }

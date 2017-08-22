@@ -42,12 +42,20 @@ namespace solmates {
         public AudioClip cleansingSoul;
         public AudioClip cleansedSoul;
 
+        //ref;
+        SoulPurityAction PurityActionRef;
+
+        public List<int> sizeone = new List<int>();
+        public List<int> sizetwo = new List<int>();
+        public List<int> sizethree = new List<int>();
+
         void Awake() {
             aSource = GetComponent<AudioSource>();
             friendsoulref = GetComponentInParent<FriendlySoul>();
             anim = GetComponent<Animator>();
-            soulScale = transform.localScale;
-            player = friendsoulref.player;
+            soulScale = transform.localScale * friendsoulref.size;
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+            PurityActionRef = player.GetComponent<SoulPurityAction>();
         }
 
         void Start() {
@@ -55,21 +63,24 @@ namespace solmates {
 
             switch (SoulWorth) {
                 case 1:
-                    SoulWorth = Random.Range(1, 4);
+                    SoulWorth = Random.Range(sizeone[0], sizeone[1]);
                     break;
                 case 2:
-                    SoulWorth = Random.Range(5, 8);
+                    SoulWorth = Random.Range(sizetwo[0], sizetwo[1]);
                     break;
                 case 3:
-                    SoulWorth = Random.Range(9, 11);
+                    SoulWorth = Random.Range(sizethree[0], sizethree[1]);
                     break;
             }
 
             waitTimebySize = friendsoulref.size;
         }
-        //changes made
+        
         public void Cleaning() {
-            if (!clean && PlayerStats.cleansouls < SoulPurityAction.maxSoulAmount) {
+           
+
+            if (!clean && !SoulPurityAction.PureSoulMaking) {
+           
                 lookedAt = true;
                 aSource.PlayOneShot(cleansingSoul);                              
               
@@ -87,7 +98,7 @@ namespace solmates {
             if ((counter > waitTimebySize)) {
                 anim.SetBool("looked", false);
                 clean = true;
-                PlayerStats.cleansouls++;
+              
                 float finalsize;
 
                 if ((soulScale.x > soulScale.y) && (soulScale.x > soulScale.z)) {
@@ -140,9 +151,15 @@ namespace solmates {
                 }
 
                 aSource.PlayOneShot(cleansedSoul);
-                yield return new WaitForSeconds(1.3f);
+                // place wait if it doesn't look right
                 GameObject cleanSoul = Instantiate(cleanSoulobj, transform.position, transform.rotation) as GameObject;
+                yield return new WaitForSeconds(.3f);
+                //particle system for the new created soul and changing it color
+                ParticleSystem pars = cleanSoul.GetComponent<ParticleSystem>();
+                var parmain = pars.main;
+                parmain.startColor = friendsoulref.finalcolor;
                 Destroy(gameObject);
+          
             }
         }
 
