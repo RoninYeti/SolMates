@@ -9,7 +9,10 @@ namespace solmates {
         private PlayerStats statsRef;
         public static bool PureSoulMaking = false;
         public static int maxSoulAmount = 3;
-    
+        //
+        public int SoulWorthCount = 0;
+        public int SoulWorthMaxAmount = 20;
+        //
         public static bool purSoulmade = false;
         public LayerMask lmask;
         public GameObject pureSoulObj;
@@ -31,6 +34,7 @@ namespace solmates {
         public AudioClip planetHit;
         private float intensity;
         public float lightTransitionSpeed = .05f;
+        public Spawner spawnref;
         private void Awake() {
             statsRef = GetComponent<PlayerStats>();
             aSource = GetComponent<AudioSource>();
@@ -42,13 +46,13 @@ namespace solmates {
 
 // will create the souls after getting to the follow points;
         IEnumerator WaitThenDestory() {
-            
-            while(PlayerStats.cleansouls<maxSoulAmount)
-            {
-                yield return new WaitForSeconds(.01f);
-            }
 
-            for (int i = 0; i < maxSoulAmount; i++)
+            //while(PlayerStats.cleansouls<maxSoulAmount)
+            //{
+            //    yield return new WaitForSeconds(.01f);
+            //}
+            int soulcount = statsRef.cleanSoulsList.Count;
+            for (int i = 0; i < soulcount; i++)
             {
                 if (statsRef.cleanSoulsList.Count != 0)
                 {
@@ -56,7 +60,8 @@ namespace solmates {
                     statsRef.cleanSoulsList.RemoveAt(0);
                 }
             }
-            PlayerStats.cleansouls -= maxSoulAmount;
+            PlayerStats.cleansouls -= soulcount;
+            SoulWorthCount = 0;
 
             yield return new WaitForSeconds(waitTimePureSoulCreation);
             purSoulmade = true;
@@ -82,7 +87,8 @@ namespace solmates {
 
         IEnumerator ReadyToFly(Ray line) {
             purSoulmade = false;
-            Vector3 vec = line.GetPoint(2f);
+            Vector3 vec = line.GetPoint(4f);
+            vec.y -= 1.5f;
             float dis = Vector3.Distance(soul.transform.position, vec);
             while (dis > .2f)
             {
@@ -97,10 +103,10 @@ namespace solmates {
 
         void Update() {
             RaycastHit rhit;
-
-            if (statsRef.cleanSoulsList.Count >= maxSoulAmount && !PureSoulMaking) {
+        //    print(SoulWorthCount);
+            if (SoulWorthCount >= SoulWorthMaxAmount && !PureSoulMaking) {
                 PureSoulMaking = true;
-                print(PureSoulMaking);
+             //   print(PureSoulMaking);
                 CreatePureSoul();
             }
 
@@ -127,6 +133,7 @@ namespace solmates {
                     planet = null;
                     aSource.PlayOneShot(planetHit);                                                                                           
                     Destroy(soul.gameObject);
+                    soul = null;
                     sunLight.GetComponent<Light>().enabled = true;
                     planetParn.GetComponent<Light>().enabled = false;
                     planet1.GetComponent<Light>().enabled = false;
@@ -136,6 +143,7 @@ namespace solmates {
                     
                     StartCoroutine(bringBackUp());
                     sendSoulAway = false;
+                    
                 }
             }
         }

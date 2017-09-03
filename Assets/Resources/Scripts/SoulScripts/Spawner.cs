@@ -18,8 +18,10 @@ namespace solmates {
         int soulsToSpawn;
 
         private GameObject soulPrefab;
+        public int soulCount;
 
         void Start() {
+            soulCount = soulsToSpawn;
             for (int i = 1; i < soulsToSpawn; i++) {
 
                 int choice = Random.Range(0, Souls.Count);
@@ -27,7 +29,18 @@ namespace solmates {
 
                 GameObject newSoul = Instantiate(soulPrefab);
                 newSoul.transform.position = Random.onUnitSphere * ((maxDistance - minDistance) * Random.value + minDistance);
+                newSoul.GetComponentInChildren<SoulAction>().SpawnRef = this;
             }
         }
+
+        public void SoulCheck()
+        {
+            soulCount--;
+            if (soulCount == 0)
+            {
+                //game ends
+            }
+        }
+
     }
 }

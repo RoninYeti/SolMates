@@ -43,25 +43,22 @@ namespace solmates {
         public AudioClip cleansedSoul;
 
         //ref;
-        SoulPurityAction PurityActionRef;
+      private  SoulPurityAction PurityActionRef;
+
+        //scale down size
+        public float ScaleDownAmount = 3f;
 
         public List<int> sizeone = new List<int>();
         public List<int> sizetwo = new List<int>();
         public List<int> sizethree = new List<int>();
 
-        void Awake() {
-            aSource = GetComponent<AudioSource>();
-            friendsoulref = GetComponentInParent<FriendlySoul>();
-            anim = GetComponent<Animator>();
-            soulScale = transform.localScale * friendsoulref.size;
-            player = GameObject.FindGameObjectWithTag("Player").transform;
-            PurityActionRef = player.GetComponent<SoulPurityAction>();
-        }
+        public Spawner SpawnRef;
 
-        void Start() {
-            float size = Mathf.RoundToInt(friendsoulref.size);
 
-            switch (SoulWorth) {
+        void ThreeSizes(int tempInt)
+        {
+            switch (tempInt)
+            {
                 case 1:
                     SoulWorth = Random.Range(sizeone[0], sizeone[1]);
                     break;
@@ -69,15 +66,46 @@ namespace solmates {
                     SoulWorth = Random.Range(sizetwo[0], sizetwo[1]);
                     break;
                 case 3:
-                    SoulWorth = Random.Range(sizethree[0], sizethree[1]);
+                    SoulWorth = Random.Range(sizethree[0], sizethree[1] + 1);
                     break;
             }
+                       
+            soulScale = new Vector3(tempInt,tempInt,tempInt);
+            transform.localScale = soulScale;
+        }
 
-            waitTimebySize = friendsoulref.size;
+        void ManySizes( int tempsize)
+        {
+            SoulWorth = Mathf.FloorToInt( tempsize / ScaleDownAmount);
+            soulScale = new Vector3(SoulWorth, SoulWorth, SoulWorth);
+            transform.localScale = soulScale;
+        }
+
+        void Awake() {
+
+            friendsoulref = GetComponentInParent<FriendlySoul>();
+            int quicksize = Mathf.FloorToInt(friendsoulref.SizeCategory);
+            if (friendsoulref.threeSizeChoses)
+            {
+                ThreeSizes(quicksize);
+            }
+            else
+            {
+                // make function work with multiple sizes
+                ManySizes(quicksize);
+            }
+            waitTimebySize = friendsoulref.SizeCategory;
+            aSource = GetComponent<AudioSource>();
+            anim = GetComponent<Animator>();
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+            PurityActionRef = player.GetComponent<SoulPurityAction>();
+        }
+
+        void Start() {
+
         }
         
         public void Cleaning() {
-           
 
             if (!clean && !SoulPurityAction.PureSoulMaking) {
            
@@ -91,7 +119,7 @@ namespace solmates {
 
         IEnumerator cleanUp() {
             while (lookedAt && (counter < waitTimebySize)) {
-                yield return new WaitForSeconds(CounterSizeTime);
+                yield return new WaitForSeconds(CounterSizeTime/3f);
                 counter += CounterSizeTime;
             }
 
@@ -105,9 +133,9 @@ namespace solmates {
                     finalsize = samplesize * soulScale.x;
 
                     while (finalsize < soulScale.x) {
-                        soulScale.x -= .1f;
-                        soulScale.y -= .1f;
-                        soulScale.z -= .1f;
+                        soulScale.x -= .2f;
+                        soulScale.y -= .2f;
+                        soulScale.z -= .2f;
                         transform.localScale = soulScale;
                         yield return new WaitForSeconds(.02f);
                     }
@@ -118,9 +146,9 @@ namespace solmates {
                     finalsize = samplesize * soulScale.y;
 
                     while (finalsize < soulScale.y) {
-                        soulScale.x -= .1f;
-                        soulScale.y -= .1f;
-                        soulScale.z -= .1f;
+                        soulScale.x -= .2f;
+                        soulScale.y -= .2f;
+                        soulScale.z -= .2f;
                         transform.localScale = soulScale;
                         yield return new WaitForSeconds(.02f);
                     }
@@ -130,9 +158,9 @@ namespace solmates {
                     finalsize = samplesize * soulScale.z;
 
                     while (finalsize < soulScale.z) {
-                        soulScale.x -= .1f;
-                        soulScale.y -= .1f;
-                        soulScale.z -= .1f;
+                        soulScale.x -= .2f;
+                        soulScale.y -= .2f;
+                        soulScale.z -= .2f;
                         transform.localScale = soulScale;
                         yield return new WaitForSeconds(.02f);
                     }
@@ -142,9 +170,9 @@ namespace solmates {
                     finalsize = samplesize * soulScale.z;
 
                     while (finalsize < soulScale.z) {
-                        soulScale.x -= .1f;
-                        soulScale.y -= .1f;
-                        soulScale.z -= .1f;
+                        soulScale.x -= .2f;
+                        soulScale.y -= .2f;
+                        soulScale.z -= .2f;
                         transform.localScale = soulScale;
                         yield return new WaitForSeconds(.02f);
                     }
@@ -153,11 +181,15 @@ namespace solmates {
                 aSource.PlayOneShot(cleansedSoul);
                 // place wait if it doesn't look right
                 GameObject cleanSoul = Instantiate(cleanSoulobj, transform.position, transform.rotation) as GameObject;
-                yield return new WaitForSeconds(.3f);
+                 
+              //  yield return new WaitForSeconds(.3f);
                 //particle system for the new created soul and changing it color
                 ParticleSystem pars = cleanSoul.GetComponent<ParticleSystem>();
                 var parmain = pars.main;
                 parmain.startColor = friendsoulref.finalcolor;
+                PurityActionRef.SoulWorthCount += SoulWorth;
+                SpawnRef.SoulCheck();
+                yield return new WaitForSeconds(.01f);
                 Destroy(gameObject);
           
             }
