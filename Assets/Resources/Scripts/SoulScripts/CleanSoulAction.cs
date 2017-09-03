@@ -12,6 +12,7 @@ namespace solmates {
         public float followSpeed = 3;
         private bool closeByFollow = false;
         public float followdisMin = 20f;
+
         void OnEnable() {
             player = GameObject.FindGameObjectWithTag("Player").transform;
             StartCoroutine(becomeFollower());
@@ -38,8 +39,6 @@ namespace solmates {
                     PlayerStats.cleansouls++;
                 }
             }
-
-
         }
     }
 }

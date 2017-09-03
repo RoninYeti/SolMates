@@ -43,7 +43,7 @@ namespace solmates {
         public AudioClip cleansedSoul;
 
         //ref;
-      private  SoulPurityAction PurityActionRef;
+        private  SoulPurityAction PurityActionRef;
 
         //scale down size
         public float ScaleDownAmount = 3f;
@@ -102,7 +102,6 @@ namespace solmates {
         }
 
         void Start() {
-
         }
         
         public void Cleaning() {
@@ -110,8 +109,12 @@ namespace solmates {
             if (!clean && !SoulPurityAction.PureSoulMaking) {
            
                 lookedAt = true;
+
+                /*AudioSource audio = GetComponent<AudioSource>();
+                audio.clip = cleansingSoul;
+                audio.Play();*/
                 aSource.PlayOneShot(cleansingSoul);                              
-              
+
                 anim.SetBool("looked", true);
                 StartCoroutine(cleanUp());
             }
@@ -179,19 +182,16 @@ namespace solmates {
                 }
 
                 aSource.PlayOneShot(cleansedSoul);
-                // place wait if it doesn't look right
+                yield return new WaitForSeconds(1.4f);
+                Destroy(gameObject);
                 GameObject cleanSoul = Instantiate(cleanSoulobj, transform.position, transform.rotation) as GameObject;
-                 
-              //  yield return new WaitForSeconds(.3f);
+
                 //particle system for the new created soul and changing it color
                 ParticleSystem pars = cleanSoul.GetComponent<ParticleSystem>();
                 var parmain = pars.main;
                 parmain.startColor = friendsoulref.finalcolor;
                 PurityActionRef.SoulWorthCount += SoulWorth;
                 SpawnRef.SoulCheck();
-                yield return new WaitForSeconds(.01f);
-                Destroy(gameObject);
-          
             }
         }
 
