@@ -39,6 +39,7 @@ namespace solmates {
 
         //sound effects
         public AudioSource aSource;
+        public AudioSource a2Source;
         public AudioClip cleansingSoul;
         public AudioClip cleansedSoul;
 
@@ -74,15 +75,13 @@ namespace solmates {
             transform.localScale = soulScale;
         }
 
-        void ManySizes( int tempsize)
-        {
+        void ManySizes( int tempsize) {
             SoulWorth = Mathf.FloorToInt( tempsize / ScaleDownAmount);
             soulScale = new Vector3(SoulWorth, SoulWorth, SoulWorth);
             transform.localScale = soulScale;
         }
 
         void Awake() {
-
             friendsoulref = GetComponentInParent<FriendlySoul>();
             int quicksize = Mathf.FloorToInt(friendsoulref.SizeCategory);
             if (friendsoulref.threeSizeChoses)
@@ -107,15 +106,12 @@ namespace solmates {
         public void Cleaning() {
 
             if (!clean && !SoulPurityAction.PureSoulMaking) {
-           
                 lookedAt = true;
-
-                /*AudioSource audio = GetComponent<AudioSource>();
-                audio.clip = cleansingSoul;
-                audio.Play();*/
-                aSource.PlayOneShot(cleansingSoul);                              
-
                 anim.SetBool("looked", true);
+                AudioSource a2Source = GetComponent<AudioSource>();
+                a2Source.clip = cleansingSoul;
+                a2Source.mute = false;
+                a2Source.Play();
                 StartCoroutine(cleanUp());
             }
         }
@@ -181,7 +177,13 @@ namespace solmates {
                     }
                 }
 
-                aSource.PlayOneShot(cleansedSoul);
+                AudioSource a2Source = GetComponent<AudioSource>();
+                a2Source.clip = cleansingSoul;
+                a2Source.mute = true;
+                AudioSource aSource = GetComponent<AudioSource>();
+                aSource.clip = cleansedSoul;
+                aSource.mute = false;
+                aSource.Play();
                 yield return new WaitForSeconds(1.4f);
                 Destroy(gameObject);
                 GameObject cleanSoul = Instantiate(cleanSoulobj, transform.position, transform.rotation) as GameObject;
@@ -200,6 +202,7 @@ namespace solmates {
                 counter = 0;
                 anim.SetBool("looked", false);
                 lookedAt = false;
+                a2Source.mute = true;
                 //anim.enabled = false;
                 StopCoroutine(cleanUp());
             }

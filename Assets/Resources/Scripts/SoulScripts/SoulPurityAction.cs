@@ -65,7 +65,6 @@ namespace solmates {
             PlayerStats.cleansouls -= soulcount;
             SoulWorthCount = 0;
 
-
             purSoulmade = true;
             soul = Instantiate(pureSoulObj, spawnTransform.position, spawnTransform.rotation) as GameObject;
             soul.transform.parent = spawnTransform;
