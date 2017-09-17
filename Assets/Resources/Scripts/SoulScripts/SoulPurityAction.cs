@@ -77,19 +77,18 @@ namespace solmates {
                 tempintensity -= .01f;
                 yield return new WaitForSeconds(lightTransitionSpeed);
                 sunLight.GetComponent<Light>().intensity = tempintensity;
-            }
-
-            planetParn.GetComponent<Light>().enabled = true;
-            planet1.GetComponent<Light>().enabled = true;
-            planet2.GetComponent<Light>().enabled = true;
-            planet3.GetComponent<Light>().enabled = true;
-            planet4.GetComponent<Light>().enabled = true;        
+                planetParn.GetComponent<Light>().enabled = true;
+                planet1.GetComponent<Light>().enabled = true;
+                planet2.GetComponent<Light>().enabled = true;
+                planet3.GetComponent<Light>().enabled = true;
+                planet4.GetComponent<Light>().enabled = true;
+            }     
         }
 
         IEnumerator ReadyToFly(Ray line) {
             purSoulmade = false;
             Vector3 vec = line.GetPoint(4f);
-            vec.y -= 1.5f;
+            vec.y -= 0.1f;
             float dis = Vector3.Distance(soul.transform.position, vec);
             while (dis > .2f)
             {
@@ -98,16 +97,14 @@ namespace solmates {
                 dis = Vector3.Distance(soul.transform.position, vec);
             }
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(.5f);
             sendSoulAway = true;
         }
 
         void Update() {
             RaycastHit rhit;
-        //    print(SoulWorthCount);
             if (SoulWorthCount >= SoulWorthMaxAmount && !PureSoulMaking) {
                 PureSoulMaking = true;
-             //   print(PureSoulMaking);
                 CreatePureSoul();
             }
 
@@ -132,6 +129,9 @@ namespace solmates {
 
                 if (dis < hitdistance) {
                     planet = null;
+
+                    //Add in activiation of one loop of Planet Hit Effect particle prefab for all planets
+
                     aSource.PlayOneShot(planetHit);                                                                                           
                     Destroy(soul.gameObject);
                     soul = null;
