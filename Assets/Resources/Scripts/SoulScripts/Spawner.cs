@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace solmates {
-    public class Spawner : MonoBehaviour {
+    public class Spawner : MonoBehaviour
+    {
 
         [SerializeField]
         List<GameObject> Souls = new List<GameObject>();
@@ -19,10 +20,13 @@ namespace solmates {
 
         private GameObject soulPrefab;
         public int soulCount;
+        public GameObject EndGameUI;
 
-        void Start() {
+        void Start()
+        {
             soulCount = soulsToSpawn;
-            for (int i = 1; i < soulsToSpawn; i++) {
+            for (int i = 1; i < soulsToSpawn; i++)
+            {
 
                 int choice = Random.Range(0, Souls.Count);
                 soulPrefab = Souls[choice].gameObject;
@@ -38,9 +42,18 @@ namespace solmates {
             soulCount--;
             if (soulCount == 0)
             {
-                //game ends
+                EndGameUI.SetActive(true);
             }
         }
-
+        void Update()
+        {
+            if(EndGameUI.activeSelf)
+            {
+                Ray quickRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward * 100f);
+                EndGameUI.transform.position = quickRay.GetPoint(50f);
+                EndGameUI.transform.LookAt(Camera.main.transform);
+                EndGameUI.transform.rotation = Quaternion.Inverse(EndGameUI.transform.rotation);
+            }
+        }
     }
 }

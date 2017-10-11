@@ -35,7 +35,7 @@ namespace solmates {
         private float intensity;
         public float lightTransitionSpeed = .05f;
         public Spawner spawnref;
-
+        PurifiedSoulAction purifiedAction;
         private void Awake() {
             statsRef = GetComponent<PlayerStats>();
             aSource = GetComponent<AudioSource>();
@@ -68,6 +68,7 @@ namespace solmates {
             purSoulmade = true;
             soul = Instantiate(pureSoulObj, spawnTransform.position, spawnTransform.rotation) as GameObject;
             soul.transform.parent = spawnTransform;
+            purifiedAction = soul.GetComponent<PurifiedSoulAction>();
             float tempintensity;
             tempintensity = sunLight.GetComponent<Light>().intensity;
             intensity = sunLight.GetComponent<Light>().intensity;
@@ -124,16 +125,16 @@ namespace solmates {
             }
 
             if (sendSoulAway) {
-                soul.transform.position = Vector3.MoveTowards(soul.transform.position, planet.transform.position, soulSpeed * Time.deltaTime);
-                float dis = Vector3.Distance(planet.transform.position, soul.transform.position);
 
-                if (dis < hitdistance) {
+                if (purifiedAction != null)
+                {
+                    soul.transform.position = Vector3.MoveTowards(soul.transform.position, planet.transform.position, soulSpeed * Time.deltaTime);
+                    float dis = Vector3.Distance(planet.transform.position, soul.transform.position);
+                }
+                else
+                {
                     planet = null;
-
-                    //Add in activiation of one loop of Planet Hit Effect particle prefab for all planets
-
-                    aSource.PlayOneShot(planetHit);                                                                                           
-                    Destroy(soul.gameObject);
+                    aSource.PlayOneShot(planetHit);
                     soul = null;
                     sunLight.GetComponent<Light>().enabled = true;
                     planetParn.GetComponent<Light>().enabled = false;
@@ -141,11 +142,20 @@ namespace solmates {
                     planet2.GetComponent<Light>().enabled = false;
                     planet3.GetComponent<Light>().enabled = false;
                     planet4.GetComponent<Light>().enabled = false;
-                    
+
                     StartCoroutine(bringBackUp());
                     sendSoulAway = false;
-                    
+
                 }
+
+           //     if (dis < hitdistance) {
+                   
+                    //Add in activiation of one loop of Planet Hit Effect particle prefab for all planets
+                                                                                          
+                   // Destroy(soul.gameObject);
+
+                    
+            //    }
             }
         }
 
