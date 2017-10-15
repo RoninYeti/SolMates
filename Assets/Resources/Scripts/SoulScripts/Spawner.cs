@@ -50,9 +50,9 @@ namespace solmates {
             if(EndGameUI.activeSelf)
             {
                 Ray quickRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward * 100f);
-                EndGameUI.transform.position = quickRay.GetPoint(50f);
-                EndGameUI.transform.LookAt(Camera.main.transform);
-                EndGameUI.transform.rotation = Quaternion.Inverse(EndGameUI.transform.rotation);
+                EndGameUI.transform.position = Vector3.Lerp(EndGameUI.transform.position, quickRay.GetPoint(100f), Time.deltaTime);
+                
+                EndGameUI.transform.rotation = Quaternion.LookRotation(EndGameUI.transform.position - Camera.main.transform.position);
             }
         }
     }

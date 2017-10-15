@@ -5,12 +5,11 @@ using UnityEngine;
 public class PurifiedSoulAction : MonoBehaviour {
 
     public GameObject ReactiveHitParticle;
-
-
+    
     private void OnTriggerEnter(Collider col)
     {
 
-        print("hit something "+ col.gameObject);
+       // print("hit something "+ col.gameObject);
 
         if(col.CompareTag("Planet"))
         {
