@@ -20,15 +20,21 @@ using UnityEngine;
 [RequireComponent(typeof(Renderer))]
 public class GvrReticlePointer : MonoBehaviour {
   private GvrReticlePointerImpl reticlePointerImpl;
+    public GvrReticlePointerImpl Impl
+    {
+        get { return reticlePointerImpl; }
+    }
 
   /// Number of segments making the reticle circle.
-  public int reticleSegments = 20;
+    public int reticleSegments = 20;
 
   /// Growth speed multiplier for the reticle/
   public float reticleGrowthSpeed = 8.0f;
 
+    public LayerMask layerMask = -1;
+
   void Awake() {
-    reticlePointerImpl = new GvrReticlePointerImpl();
+    reticlePointerImpl = new GvrReticlePointerImpl(layerMask);
   }
 
   void Start() {

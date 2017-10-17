@@ -233,19 +233,21 @@ namespace Gvr.Internal {
       if (device == null) {
 #if UNITY_EDITOR
         device = new EditorDevice();
+#elif UNITY_STANDALONE
+        device = new WinDevice();
 #elif ANDROID_DEVICE
-    #if UNITY_HAS_GOOGLEVR
+#if UNITY_HAS_GOOGLEVR
         device = new UnityVRDevice();
-    #else
+#else
         device = new AndroidDevice();
-    #endif  // UNITY_HAS_GOOGLEVR
+#endif  // UNITY_HAS_GOOGLEVR
 #elif IPHONE_DEVICE
         device = new iOSDevice();
 #else
         throw new InvalidOperationException("Unsupported device.");
 #endif  // UNITY_EDITOR
-      }
-      return device;
+        }
+        return device;
     }
   }
 }

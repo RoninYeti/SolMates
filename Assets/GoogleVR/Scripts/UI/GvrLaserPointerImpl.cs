@@ -14,7 +14,7 @@
 
 // The controller is not available for versions of Unity without the
 // GVR native integration.
-
+#define UNITY_HAS_GOOGLEVR
 using UnityEngine;
 using System.Collections;
 
@@ -32,6 +32,8 @@ public class GvrLaserPointerImpl : GvrBasePointer {
   public Camera MainCamera { private get; set; }
 
   public Color LaserColor { private get; set; }
+  public Color LaserOnColor { private get; set; }
+  public Color LaserOffColor { private get; set; }
 
   public LineRenderer LaserLineRenderer { get; set; }
 
@@ -50,8 +52,8 @@ public class GvrLaserPointerImpl : GvrBasePointer {
 
   public override float MaxPointerDistance {
     get {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-      return MaxReticleDistance;
+#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE)
+            return MaxReticleDistance;
 #else
       return 0;
 #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
@@ -63,24 +65,24 @@ public class GvrLaserPointerImpl : GvrBasePointer {
     MaxReticleDistance = 2.5f;
   }
 
-#if !(UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR))
+#if !(UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE))
   public override void OnStart() {
     // Don't call base.Start() so that this pointer isn't activated when
     // the editor doesn't have UNITY_HAS_GOOGLE_VR.
   }
 #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 
-  public override void OnInputModuleEnabled() {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-    if (LaserLineRenderer != null) {
+    public override void OnInputModuleEnabled() {
+#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE)
+        if (LaserLineRenderer != null) {
       LaserLineRenderer.enabled = true;
     }
 #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 
   public override void OnInputModuleDisabled() {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-    if (LaserLineRenderer != null) {
+#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE)
+        if (LaserLineRenderer != null) {
       LaserLineRenderer.enabled = false;
     }
 #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
@@ -88,28 +90,33 @@ public class GvrLaserPointerImpl : GvrBasePointer {
 
   public override void OnPointerEnter(GameObject targetObject, Vector3 intersectionPosition,
       Ray intersectionRay, bool isInteractive) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-    PointerIntersection = intersectionPosition;
+#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE)
+        PointerIntersection = intersectionPosition;
     PointerIntersectionRay = intersectionRay;
     IsPointerIntersecting = true;
+        if (isInteractive)
+            LaserColor = LaserOnColor;
+        else
+            LaserColor = LaserOffColor;
 #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-  }
+    }
 
   public override void OnPointerHover(GameObject targetObject, Vector3 intersectionPosition,
       Ray intersectionRay, bool isInteractive) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-    PointerIntersection = intersectionPosition;
+#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE)
+        PointerIntersection = intersectionPosition;
     PointerIntersectionRay = intersectionRay;
 #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 
   public override void OnPointerExit(GameObject targetObject) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-    PointerIntersection = Vector3.zero;
+#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE)
+        PointerIntersection = Vector3.zero;
     PointerIntersectionRay = new Ray();
     IsPointerIntersecting = false;
+        LaserColor = LaserOffColor;
 #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-  }
+    }
 
   public override void OnPointerClickDown() {
     // User has performed a click on the target.  In a derived class, you could
@@ -122,8 +129,8 @@ public class GvrLaserPointerImpl : GvrBasePointer {
   }
 
   public override void GetPointerRadius(out float enterRadius, out float exitRadius) {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-    if (Reticle != null) {
+#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE)
+        if (Reticle != null) {
       float reticleScale = Reticle.transform.localScale.x;
 
       // Fixed size for enter radius to avoid flickering.
@@ -145,8 +152,8 @@ public class GvrLaserPointerImpl : GvrBasePointer {
 #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
   }
 
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
-  public void OnUpdate() {
+#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE)
+    public void OnUpdate() {
     // Set the reticle's position and scale
     if (Reticle != null) {
       if (IsPointerIntersecting) {
@@ -182,9 +189,9 @@ public class GvrLaserPointerImpl : GvrBasePointer {
     }
     LaserLineRenderer.SetPositions(new Vector3[] {base.PointerTransform.position, lineEndPoint});
 
-    // Adjust transparency
-    float alpha = GvrControllerVisual.AlphaValue;
-    LaserLineRenderer.SetColors(Color.Lerp(Color.clear, LaserColor, alpha), Color.clear);
+        // Adjust transparency
+        //float alpha = GvrControllerVisual.AlphaValue;
+        LaserLineRenderer.SetColors(LaserColor, LaserColor);// Color.Lerp(Color.clear, LaserColor, alpha), Color.clear);
   }
 #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 }

@@ -106,7 +106,6 @@ public class GvrPointerPhysicsRaycaster : GvrBasePointerRaycaster {
         sortingLayer = 0,
         sortingOrder = 0
       };
-
       resultAppendList.Add(result);
     }
   }

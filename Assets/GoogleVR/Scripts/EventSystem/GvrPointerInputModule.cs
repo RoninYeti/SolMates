@@ -58,6 +58,13 @@ public class GvrPointerInputModule : BaseInputModule {
   public bool vrModeOnly = false;
 
   private PointerEventData pointerData;
+    public PointerEventData PointerData
+    {
+        get
+        {
+            return pointerData;
+        }
+    }
   private Vector2 lastPose;
   private Vector2 lastScroll;
   private bool eligibleForScroll = false;
@@ -88,7 +95,7 @@ public class GvrPointerInputModule : BaseInputModule {
 #if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     isVrModeEnabled |= VRSettings.enabled;
 #else
-    isVrModeEnabled |= GvrViewer.Instance.VRModeEnabled;
+    //isVrModeEnabled |= GvrViewer.Instance.VRModeEnabled;
 #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 
     bool activeState = base.ShouldActivateModule() && isVrModeEnabled;
@@ -139,7 +146,7 @@ public class GvrPointerInputModule : BaseInputModule {
     CastRay();
     UpdateCurrentObject(previousObject);
     UpdateReticle(previousObject);
-
+        
     // True during the frame that the trigger has been pressed.
     bool triggerDown = Input.GetMouseButtonDown(0);
     // True if the trigger is held down.
@@ -148,9 +155,9 @@ public class GvrPointerInputModule : BaseInputModule {
     #if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
     triggerDown |= GvrController.ClickButtonDown;
     triggering |= GvrController.ClickButton;
-    #endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
+#endif  // UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
 
-    if (!IsPointerActiveAndAvailable()) {
+        if (!IsPointerActiveAndAvailable()) {
       triggerDown = false;
       triggering = false;
     }

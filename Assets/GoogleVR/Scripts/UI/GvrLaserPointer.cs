@@ -14,7 +14,7 @@
 
 // The controller is not available for versions of Unity without the
 // GVR native integration.
-
+#define UNITY_HAS_GOOGLEVR
 using UnityEngine;
 using System.Collections;
 
@@ -23,14 +23,20 @@ using System.Collections;
 /// when its not directly in their field of view.
 [RequireComponent(typeof(LineRenderer))]
 public class GvrLaserPointer : MonoBehaviour {
-#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR)
+#if UNITY_HAS_GOOGLEVR && (UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE)
   private GvrLaserPointerImpl laserPointerImpl;
+    public GvrLaserPointerImpl Impl
+    {
+        get { return laserPointerImpl; }
+    }
 
-  /// Color of the laser pointer including alpha transparency
-  public Color laserColor = new Color(1.0f, 1.0f, 1.0f, 0.25f);
+    /// Color of the laser pointer including alpha transparency
+    //public Color laserColor = new Color(1.0f, 1.0f, 1.0f, 0.25f);
+    public Color laserOnColor = new Color(1.0f, 1.0f, 1.0f, 0.25f);
+    public Color laserOffColor = new Color(1.0f, 1.0f, 1.0f, 0.25f);
 
   /// Maximum distance of the pointer (meters).
-  [Range(0.0f, 10.0f)]
+  [Range(0.0f, 100.0f)]
   public float maxLaserDistance = 0.75f;
 
   /// Maximum distance of the reticle (meters).
@@ -73,7 +79,9 @@ public class GvrLaserPointer : MonoBehaviour {
     if (laserPointerImpl == null) {
       return;
     }
-    laserPointerImpl.LaserColor = laserColor;
+    //laserPointerImpl.LaserColor = laserColor;
+    laserPointerImpl.LaserOnColor = laserOnColor;
+    laserPointerImpl.LaserOffColor = laserOffColor;
     laserPointerImpl.Reticle = reticle;
     laserPointerImpl.MaxLaserDistance = maxLaserDistance;
     laserPointerImpl.MaxReticleDistance = maxReticleDistance;

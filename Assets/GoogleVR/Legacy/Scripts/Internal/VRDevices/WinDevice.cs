@@ -11,16 +11,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-#if UNITY_EDITOR
+#if UNITY_STANDALONE
 
 using UnityEngine;
-using UnityEditor;
 using System.Collections.Generic;
 
 /// @cond
 namespace Gvr.Internal {
   // Sends simulated values for use when testing within the Unity Editor.
-  public class EditorDevice : BaseVRDevice {
+  public class WinDevice : BaseVRDevice {
     // Simulated neck model.  Vector from the neck pivot point to the point between the eyes.
     private static readonly Vector3 neckOffset = new Vector3(0, 0.075f, 0.08f);
 
@@ -31,9 +30,12 @@ namespace Gvr.Internal {
     private static float mouseY = 0;
     private static float mouseZ = 0;
 
-    public override void Init() {
-      Input.gyro.enabled = true;
-    }
+        public override void Init()
+        {
+            Input.gyro.enabled = true;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
     public override bool SupportsNativeDistortionCorrection(List<string> diagnostics) {
       return false;  // No need for diagnostic message.
@@ -50,25 +52,11 @@ namespace Gvr.Internal {
     public override void SetNeckModelScale(float scale) {}
 
     private Quaternion initialRotation = Quaternion.identity;
-
-    private bool remoteCommunicating = false;
-    private bool RemoteCommunicating {
-      get {
-        if (!remoteCommunicating) {
-          remoteCommunicating = EditorApplication.isRemoteConnected;
-        }
-        return remoteCommunicating;
-      }
-    }
-
-    static bool engaged;
+        
+    static bool engaged = true;
     public override void UpdateState() {
       Quaternion rot;
-      if (GvrViewer.Instance.UseUnityRemoteInput && RemoteCommunicating) {
-        var att = Input.gyro.attitude * initialRotation;
-        att = new Quaternion(att.x, att.y, -att.z, -att.w);
-        rot = Quaternion.Euler(90, 0, 0) * att;
-      } else {
+
         bool rolled = false;
 
         if (Input.GetMouseButtonDown(1))
@@ -85,25 +73,25 @@ namespace Gvr.Internal {
         }
 
         if (engaged) { //Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt)) {
-          mouseX += Input.GetAxis("Mouse X") * 5;
-          if (mouseX <= -180) {
+            mouseX += Input.GetAxis("Mouse X") * 5;
+            if (mouseX <= -180) {
             mouseX += 360;
-          } else if (mouseX > 180) {
+            } else if (mouseX > 180) {
             mouseX -= 360;
-          }
-          mouseY -= Input.GetAxis("Mouse Y") * 2.4f;
-          mouseY = Mathf.Clamp(mouseY, -85, 85);
+            }
+            mouseY -= Input.GetAxis("Mouse Y") * 2.4f;
+            mouseY = Mathf.Clamp(mouseY, -85, 85);
         } /*else if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) {
-          rolled = true;
-          mouseZ += Input.GetAxis("Mouse X") * 5;
-          mouseZ = Mathf.Clamp(mouseZ, -85, 85);
-        }*/
-        if (!rolled && GvrViewer.Instance.autoUntiltHead) {
-          // People don't usually leave their heads tilted to one side for long.
-          mouseZ = Mathf.Lerp(mouseZ, 0, Time.deltaTime / (Time.deltaTime + 0.1f));
+            rolled = true;
+            mouseZ += Input.GetAxis("Mouse X") * 5;
+            mouseZ = Mathf.Clamp(mouseZ, -85, 85);
         }
+        if (!rolled && GvrViewer.Instance.autoUntiltHead) {
+            // People don't usually leave their heads tilted to one side for long.
+            mouseZ = Mathf.Lerp(mouseZ, 0, Time.deltaTime / (Time.deltaTime + 0.1f));
+        }*/
         rot = Quaternion.Euler(mouseY, mouseX, mouseZ);
-      }
+      
       var neck = (rot * neckOffset - neckOffset.y * Vector3.up) * GvrViewer.Instance.NeckModelScale;
       headPose.Set(neck, rot);
 
@@ -115,9 +103,9 @@ namespace Gvr.Internal {
     }
 
     public override void UpdateScreenData() {
-      Profile = GvrProfile.GetKnownProfile(GvrViewer.Instance.ScreenSize, GvrViewer.Instance.ViewerType);
-      ComputeEyesFromProfile();
-      profileChanged = true;
+        Profile = GvrProfile.Default;//.GetKnownProfile(GvrViewer.Instance.ScreenSize, GvrViewer.Instance.ViewerType);
+        ComputeEyesFromProfile();
+        profileChanged = true;
     }
 
     public override void Recenter() {

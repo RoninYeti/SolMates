@@ -54,14 +54,19 @@ public class GvrReticlePointerImpl : GvrBasePointer {
 
   public float ReticleOuterDiameter { get; private set; }
 
+    private LayerMask layerMask;
+
   public override float MaxPointerDistance {
     get {
       return RETICLE_DISTANCE_MAX;
     }
   }
+    public GvrReticlePointerImpl() : this(-1)
+    {
+    }
 
-
-  public GvrReticlePointerImpl() {
+  public GvrReticlePointerImpl(LayerMask layerMask) {
+        this.layerMask = layerMask;
     ReticleGrowthSpeed = 8.0f;
     ReticleInnerAngle = 0.0f;
     ReticleOuterAngle = 0.5f;
@@ -88,7 +93,7 @@ public class GvrReticlePointerImpl : GvrBasePointer {
   /// The intersectionRay is the ray that was cast to determine the intersection.
   public override void OnPointerEnter(GameObject targetObject, Vector3 intersectionPosition,
      Ray intersectionRay, bool isInteractive) {
-    SetPointerTarget(intersectionPosition, isInteractive);
+    SetPointerTarget(intersectionPosition, isInteractive && ((1 << targetObject.layer) & layerMask.value) != 0);
   }
 
   /// Called every frame the user is still pointing at a valid GameObject. This
@@ -99,7 +104,7 @@ public class GvrReticlePointerImpl : GvrBasePointer {
   /// The intersectionRay is the ray that was cast to determine the intersection.
   public override void OnPointerHover(GameObject targetObject, Vector3 intersectionPosition,
       Ray intersectionRay, bool isInteractive) {
-    SetPointerTarget(intersectionPosition, isInteractive);
+    SetPointerTarget(intersectionPosition, isInteractive && ((1 << targetObject.layer) & layerMask.value) != 0);
   }
 
   /// Called when the user's look no longer intersects an object previously
