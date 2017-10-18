@@ -145,17 +145,7 @@ namespace solmates {
 
                     StartCoroutine(bringBackUp());
                     sendSoulAway = false;
-
                 }
-
-           //     if (dis < hitdistance) {
-                   
-                    //Add in activiation of one loop of Planet Hit Effect particle prefab for all planets
-                                                                                          
-                   // Destroy(soul.gameObject);
-
-                    
-            //    }
             }
         }
 
