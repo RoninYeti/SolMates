@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace solmates {
-    public class Spawner : MonoBehaviour
-    {
+    public class Spawner : MonoBehaviour {
 
         [SerializeField]
         List<GameObject> Souls = new List<GameObject>();
@@ -22,11 +21,8 @@ namespace solmates {
         public GameObject EndGameUI;
 		List<SoulAction> spawnedSouls = new List<SoulAction>();
 
-        void Start()
-        {
-            for (int i = 1; i < soulsToSpawn; i++)
-            {
-
+        void Start() {
+            for (int i = 1; i < soulsToSpawn; i++) {
                 int choice = Random.Range(0, Souls.Count);
                 soulPrefab = Souls[choice].gameObject;
 
@@ -38,40 +34,35 @@ namespace solmates {
             }
         }
 
-        public void RemoveSoul(SoulAction soul)
-        {
+        public void RemoveSoul(SoulAction soul) {
             spawnedSouls.Remove(soul);
             Destroy(soul.gameObject);
         }
 
-        public void SoulCheck(SoulPurityAction purity)
-        {
+        public void SoulCheck(SoulPurityAction purity) {
             int remaining = 0;
-            for (int i = 0; i < spawnedSouls.Count; i++)
-            {
+
+            for (int i = 0; i < spawnedSouls.Count; i++) {
                 remaining += spawnedSouls[i].SoulWorth;
             }
 
-            if (remaining < purity.SoulWorthMaxAmount)
-            {
-                for (int i = 0; i < spawnedSouls.Count; i++)
-                {
+            if (remaining < purity.SoulWorthMaxAmount) {
+
+                for (int i = 0; i < spawnedSouls.Count; i++) {
                     Destroy(spawnedSouls[i].gameObject);
                 }
+
                 spawnedSouls.Clear();
                 EndGameUI.SetActive(true);
             }
         }
 
-        void Update()
-        {
-            if(EndGameUI.activeSelf)
-            {
+        void Update() {
+            /*if(EndGameUI.activeSelf) {
                 Ray quickRay = new Ray(Camera.main.transform.position, Camera.main.transform.forward * 100f);
                 EndGameUI.transform.position = Vector3.Lerp(EndGameUI.transform.position, quickRay.GetPoint(100f), Time.deltaTime);
-                
                 EndGameUI.transform.rotation = Quaternion.LookRotation(EndGameUI.transform.position - Camera.main.transform.position);
-            }
+            }*/
         }
     }
 }

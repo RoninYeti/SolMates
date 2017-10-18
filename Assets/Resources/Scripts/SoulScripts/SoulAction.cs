@@ -55,11 +55,8 @@ namespace solmates {
 
         public Spawner SpawnRef;
 
-
-        void ThreeSizes(int tempInt)
-        {
-            switch (tempInt)
-            {
+        void ThreeSizes(int tempInt) {
+            switch (tempInt) {
                 case 1:
                     SoulWorth = Random.Range(sizeone[0], sizeone[1]);
                     break;
@@ -84,15 +81,15 @@ namespace solmates {
         void Awake() {
             friendsoulref = GetComponentInParent<FriendlySoul>();
             int quicksize = Mathf.FloorToInt(friendsoulref.SizeCategory);
-            if (friendsoulref.threeSizeChoses)
-            {
+
+            if (friendsoulref.threeSizeChoses) {
                 ThreeSizes(quicksize);
             }
-            else
-            {
+            else {
                 // make function work with multiple sizes
                 ManySizes(quicksize);
             }
+
             waitTimebySize = friendsoulref.SizeCategory;
             aSource = GetComponent<AudioSource>();
             anim = GetComponent<Animator>();
@@ -140,8 +137,7 @@ namespace solmates {
                     }
                 }
 
-                else if ((soulScale.y > soulScale.x) && (soulScale.y > soulScale.z))
-                {
+                else if ((soulScale.y > soulScale.x) && (soulScale.y > soulScale.z)) {
                     finalsize = samplesize * soulScale.y;
 
                     while (finalsize < soulScale.y) {

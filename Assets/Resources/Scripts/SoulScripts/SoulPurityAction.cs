@@ -4,15 +4,16 @@ using UnityEngine;
 
 namespace solmates {
     public class SoulPurityAction : MonoBehaviour {
+
         public static SoulPurityAction Instance;
         public Transform spawnTransform;
         private PlayerStats statsRef;
         public static bool PureSoulMaking = false;
         public static int maxSoulAmount = 3;
-        //
+        
         public int SoulWorthCount = 0;
         public int SoulWorthMaxAmount = 10;
-        //
+        
         public static bool purSoulmade = false;
         public LayerMask lmask;
         public GameObject pureSoulObj;
@@ -49,21 +50,16 @@ namespace solmates {
 
         //will create the souls after getting to the follow points;
         IEnumerator WaitThenDestory() {
-
-            //while(PlayerStats.cleansouls<maxSoulAmount)
-            //{
-            //    yield return new WaitForSeconds(.01f);
-            //}
             int soulcount = statsRef.cleanSoulsList.Count;
             yield return new WaitForSeconds(waitTimePureSoulCreation);
-            for (int i = 0; i < soulcount; i++)
-            {
-                if (statsRef.cleanSoulsList.Count != 0)
-                {
+
+            for (int i = 0; i < soulcount; i++) {
+                if (statsRef.cleanSoulsList.Count != 0) {
                     Destroy(statsRef.cleanSoulsList[0]);
                     statsRef.cleanSoulsList.RemoveAt(0);
                 }
             }
+
             PlayerStats.cleansouls -= soulcount;
             SoulWorthCount = 0;
 
@@ -75,8 +71,7 @@ namespace solmates {
             tempintensity = sunLight.GetComponent<Light>().intensity;
             intensity = sunLight.GetComponent<Light>().intensity;
 
-            while (tempintensity > .01f)
-            {
+            while (tempintensity > .01f) {
                 tempintensity -= .01f;
                 yield return new WaitForSeconds(lightTransitionSpeed);
                 sunLight.GetComponent<Light>().intensity = tempintensity;
@@ -88,8 +83,7 @@ namespace solmates {
             }
         }
 
-        public void CheckForEnd()
-        {
+        public void CheckForEnd() {
             spawnref.SoulCheck(this);
         }
 
@@ -98,8 +92,8 @@ namespace solmates {
             Vector3 vec = line.GetPoint(4f);
             vec.y -= 0.1f;
             float dis = Vector3.Distance(soul.transform.position, vec);
-            while (dis > .2f)
-            {
+
+            while (dis > .2f) {
                 soul.transform.position = Vector3.MoveTowards(soul.transform.position, vec,Time.deltaTime * ToReadySpeed);
                 yield return new WaitForSeconds(.01f);
                 dis = Vector3.Distance(soul.transform.position, vec);
@@ -111,6 +105,7 @@ namespace solmates {
 
         void Update() {
             RaycastHit rhit;
+
             if (SoulWorthCount >= SoulWorthMaxAmount && !PureSoulMaking) {
                 PureSoulMaking = true;
                 CreatePureSoul();
@@ -133,13 +128,12 @@ namespace solmates {
 
             if (sendSoulAway) {
 
-                if (purifiedAction != null)
-                {
+                if (purifiedAction != null) {
                     soul.transform.position = Vector3.MoveTowards(soul.transform.position, planet.transform.position, soulSpeed * Time.deltaTime);
                     float dis = Vector3.Distance(planet.transform.position, soul.transform.position);
                 }
-                else
-                {
+
+                else {
                     planet = null;
                     aSource.PlayOneShot(planetHit);
                     soul = null;
@@ -156,16 +150,16 @@ namespace solmates {
             }
         }
 
-        IEnumerator bringBackUp()
-        {
+        IEnumerator bringBackUp() {
             float tempintensity;
             tempintensity = sunLight.GetComponent<Light>().intensity;
-            while (tempintensity<=intensity)
-            {
+
+            while (tempintensity<=intensity) {
                 tempintensity += .01f;
                 sunLight.GetComponent<Light>().intensity = tempintensity;
                 yield return new WaitForSeconds(lightTransitionSpeed);
             }
+
             PureSoulMaking = false;
         }
     }

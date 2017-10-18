@@ -6,20 +6,23 @@ using UnityEngine.SceneManagement;
 namespace solmates {
 	public class mainMenuUI : MonoBehaviour {
 
-		void Start () {
+        public AudioSource aSource;
+        public AudioClip buttonPress;
+
+        void Start () {
 		}
 		
 		void Update () {	
 		}
 
-		public void StartGame()
-		{
-			SceneManager.LoadScene (1);
+		public void StartGame() {
+            aSource.PlayOneShot(buttonPress);
+            SceneManager.LoadScene(1);
 		}
 
-		public void EndGame()
-		{
-			Application.Quit ();
+		public void EndGame() {
+            aSource.PlayOneShot(buttonPress);
+            Application.Quit();
 		}
 	}
 }
