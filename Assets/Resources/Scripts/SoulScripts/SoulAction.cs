@@ -185,7 +185,6 @@ namespace solmates {
                 aSource.mute = false;
                 aSource.Play();
                 yield return new WaitForSeconds(1.4f);
-                Destroy(gameObject);
                 GameObject cleanSoul = Instantiate(cleanSoulobj, transform.position, transform.rotation) as GameObject;
 
                 //particle system for the new created soul and changing it color
@@ -193,7 +192,7 @@ namespace solmates {
                 var parmain = pars.main;
                 parmain.startColor = friendsoulref.finalcolor;
                 PurityActionRef.SoulWorthCount += SoulWorth;
-                SpawnRef.SoulCheck();
+                SpawnRef.RemoveSoul(this);
             }
         }
 

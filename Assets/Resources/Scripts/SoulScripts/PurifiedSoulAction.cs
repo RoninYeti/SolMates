@@ -2,23 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PurifiedSoulAction : MonoBehaviour {
+namespace solmates
+{
+    public class PurifiedSoulAction : MonoBehaviour {
 
-    public GameObject ReactiveHitParticle;
-    
-    private void OnTriggerEnter(Collider col)
-    {
+        public GameObject ReactiveHitParticle;
 
-       // print("hit something "+ col.gameObject);
-
-        if(col.CompareTag("Planet"))
+        private void OnTriggerEnter(Collider col)
         {
 
-            Instantiate(ReactiveHitParticle, transform.position, transform.rotation);
-            Destroy(transform.gameObject);
-        }
-    }
+            // print("hit something "+ col.gameObject);
 
-    void  Update()
-    { }
-}
+            if (col.CompareTag("Planet"))
+            {
+
+                Instantiate(ReactiveHitParticle, transform.position, transform.rotation);
+                Destroy(transform.gameObject);
+                SoulPurityAction.Instance.CheckForEnd();
+            }
+        }
+
+        void Update()
+        { }
+    } }

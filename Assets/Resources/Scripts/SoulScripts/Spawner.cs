@@ -19,12 +19,11 @@ namespace solmates {
         int soulsToSpawn;
 
         private GameObject soulPrefab;
-        public int soulCount;
         public GameObject EndGameUI;
+		List<SoulAction> spawnedSouls = new List<SoulAction>();
 
         void Start()
         {
-            soulCount = soulsToSpawn;
             for (int i = 1; i < soulsToSpawn; i++)
             {
 
@@ -33,18 +32,37 @@ namespace solmates {
 
                 GameObject newSoul = Instantiate(soulPrefab);
                 newSoul.transform.position = Random.onUnitSphere * ((maxDistance - minDistance) * Random.value + minDistance);
-                newSoul.GetComponentInChildren<SoulAction>().SpawnRef = this;
+                SoulAction soulComp = newSoul.GetComponentInChildren<SoulAction>();
+                soulComp.SpawnRef = this;
+				spawnedSouls.Add (soulComp);
             }
         }
 
-        public void SoulCheck()
+        public void RemoveSoul(SoulAction soul)
         {
-            soulCount--;
-            if (soulCount == 0)
+            spawnedSouls.Remove(soul);
+            Destroy(soul.gameObject);
+        }
+
+        public void SoulCheck(SoulPurityAction purity)
+        {
+            int remaining = 0;
+            for (int i = 0; i < spawnedSouls.Count; i++)
             {
+                remaining += spawnedSouls[i].SoulWorth;
+            }
+
+            if (remaining < purity.SoulWorthMaxAmount)
+            {
+                for (int i = 0; i < spawnedSouls.Count; i++)
+                {
+                    Destroy(spawnedSouls[i].gameObject);
+                }
+                spawnedSouls.Clear();
                 EndGameUI.SetActive(true);
             }
         }
+
         void Update()
         {
             if(EndGameUI.activeSelf)

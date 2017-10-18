@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace solmates {
     public class SoulPurityAction : MonoBehaviour {
-
+        public static SoulPurityAction Instance;
         public Transform spawnTransform;
         private PlayerStats statsRef;
         public static bool PureSoulMaking = false;
@@ -36,7 +36,9 @@ namespace solmates {
         public float lightTransitionSpeed = .05f;
         public Spawner spawnref;
         PurifiedSoulAction purifiedAction;
+
         private void Awake() {
+            Instance = this;
             statsRef = GetComponent<PlayerStats>();
             aSource = GetComponent<AudioSource>();
         }
@@ -83,7 +85,12 @@ namespace solmates {
                 planet2.GetComponent<Light>().enabled = true;
                 planet3.GetComponent<Light>().enabled = true;
                 planet4.GetComponent<Light>().enabled = true;
-            }     
+            }
+        }
+
+        public void CheckForEnd()
+        {
+            spawnref.SoulCheck(this);
         }
 
         IEnumerator ReadyToFly(Ray line) {
