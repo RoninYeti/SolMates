@@ -5,7 +5,6 @@ using UnityEngine;
 namespace solmates {
     public class PlayerStats : MonoBehaviour {
 
-        public static int cleansouls;
         public GameObject playercir;
 
         public AudioSource source;
