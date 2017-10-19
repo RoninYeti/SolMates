@@ -22,6 +22,7 @@ namespace solmates {
 		List<SoulAction> spawnedSouls = new List<SoulAction>();
 
         void Start() {
+            Cursor.visible = false;
             for (int i = 1; i < soulsToSpawn; i++) {
                 int choice = Random.Range(0, Souls.Count);
                 soulPrefab = Souls[choice].gameObject;
@@ -53,8 +54,13 @@ namespace solmates {
                 }
 
                 spawnedSouls.Clear();
-                EndGameUI.SetActive(true);
+                StartCoroutine(WaitBeforeVictory());
             }
+        }
+
+        IEnumerator WaitBeforeVictory() {
+            yield return new WaitForSeconds(2);
+            EndGameUI.SetActive(true);
         }
 
         void Update() {

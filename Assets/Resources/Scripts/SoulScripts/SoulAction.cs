@@ -44,7 +44,7 @@ namespace solmates {
         public AudioClip cleansedSoul;
 
         //ref;
-        private  SoulPurityAction PurityActionRef;
+        private SoulPurityAction PurityActionRef;
 
         //scale down size
         public float ScaleDownAmount = 3f;

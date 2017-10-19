@@ -10,10 +10,12 @@ namespace solmates {
         public AudioClip buttonPress;
 
         void Start () {
-		}
+        }
 		
-		void Update () {	
-		}
+		void Update () {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
 
 		public void StartGame() {
             aSource.PlayOneShot(buttonPress);

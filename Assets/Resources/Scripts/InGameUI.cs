@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 namespace solmates {
 	public class InGameUI : MonoBehaviour {
 
-		public float timeToWait=10f;
+		public float timeToWait=6f;
         
 		void OnEnable() {
 			StartCoroutine(GotoFirstScene());
@@ -14,7 +14,7 @@ namespace solmates {
 
 		IEnumerator GotoFirstScene() {
 			yield return new WaitForSeconds(timeToWait);
-			SceneManager.LoadScene(0);
-		}
+            SceneManager.LoadScene(0);
+        }
 	}
 }

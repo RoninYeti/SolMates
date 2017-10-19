@@ -1,0 +1,220 @@
+fileFormatVersion: 2
+guid: 84147ef2752294a4282482c3e5226a4b
+timeCreated: 1508432544
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: B_Tentacle_1
+    100002: B_Tentacle_2
+    100004: B_Tentacle_3
+    100006: B_Tentacle_4
+    100008: B_Tentacle_5
+    100010: B_Tentacle_6
+    100012: B_Tentacle_7
+    100014: B_Tentacle_Base
+    100016: B_Tentacle_Tip
+    100018: Chin
+    100020: Core_Skeleton
+    100022: //RootNode
+    100024: ES_Infected
+    100026: ikHandle1
+    100028: ikHandle2
+    100030: ikHandle3
+    100032: ikHandle4
+    100034: ikHandle5
+    100036: Infected_Body
+    100038: Jaw
+    100040: L_M_Eye
+    100042: L_M_Eyeball
+    100044: L_S_Eye
+    100046: L_S_Eyeball
+    100048: L_Tentacle_1
+    100050: L_Tentacle_2
+    100052: L_Tentacle_3
+    100054: L_Tentacle_4
+    100056: L_Tentacle_5
+    100058: L_Tentacle_6
+    100060: L_Tentacle_7
+    100062: L_Tentacle_Base
+    100064: L_Tentacle_Tip
+    100066: Lower_Body_Base
+    100068: Mid_Lower_Body
+    100070: Neck
+    100072: R_M_Eye
+    100074: R_M_Eyeball
+    100076: R_S_Eye
+    100078: R_S_Eyeball
+    100080: R_Tentacle_1
+    100082: R_Tentacle_2
+    100084: R_Tentacle_3
+    100086: R_Tentacle_4
+    100088: R_Tentacle_5
+    100090: R_Tentacle_6
+    100092: R_Tentacle_7
+    100094: R_Tentacle_Base
+    100096: R_Tentacle_Tip
+    100098: Stinger_1
+    100100: Stinger_2
+    100102: Stinger_3
+    100104: Stinger_4
+    100106: Stinger_5
+    100108: Stinger_Base
+    100110: Stinger_Tip
+    100112: T_Tentacle_1
+    100114: T_Tentacle_2
+    100116: T_Tentacle_3
+    100118: T_Tentacle_4
+    100120: T_Tentacle_5
+    100122: T_Tentacle_6
+    100124: T_Tentacle_7
+    100126: T_Tentacle_Base
+    100128: T_Tentacle_Tip
+    100130: Upper_Body_Base
+    400000: B_Tentacle_1
+    400002: B_Tentacle_2
+    400004: B_Tentacle_3
+    400006: B_Tentacle_4
+    400008: B_Tentacle_5
+    400010: B_Tentacle_6
+    400012: B_Tentacle_7
+    400014: B_Tentacle_Base
+    400016: B_Tentacle_Tip
+    400018: Chin
+    400020: Core_Skeleton
+    400022: //RootNode
+    400024: ES_Infected
+    400026: ikHandle1
+    400028: ikHandle2
+    400030: ikHandle3
+    400032: ikHandle4
+    400034: ikHandle5
+    400036: Infected_Body
+    400038: Jaw
+    400040: L_M_Eye
+    400042: L_M_Eyeball
+    400044: L_S_Eye
+    400046: L_S_Eyeball
+    400048: L_Tentacle_1
+    400050: L_Tentacle_2
+    400052: L_Tentacle_3
+    400054: L_Tentacle_4
+    400056: L_Tentacle_5
+    400058: L_Tentacle_6
+    400060: L_Tentacle_7
+    400062: L_Tentacle_Base
+    400064: L_Tentacle_Tip
+    400066: Lower_Body_Base
+    400068: Mid_Lower_Body
+    400070: Neck
+    400072: R_M_Eye
+    400074: R_M_Eyeball
+    400076: R_S_Eye
+    400078: R_S_Eyeball
+    400080: R_Tentacle_1
+    400082: R_Tentacle_2
+    400084: R_Tentacle_3
+    400086: R_Tentacle_4
+    400088: R_Tentacle_5
+    400090: R_Tentacle_6
+    400092: R_Tentacle_7
+    400094: R_Tentacle_Base
+    400096: R_Tentacle_Tip
+    400098: Stinger_1
+    400100: Stinger_2
+    400102: Stinger_3
+    400104: Stinger_4
+    400106: Stinger_5
+    400108: Stinger_Base
+    400110: Stinger_Tip
+    400112: T_Tentacle_1
+    400114: T_Tentacle_2
+    400116: T_Tentacle_3
+    400118: T_Tentacle_4
+    400120: T_Tentacle_5
+    400122: T_Tentacle_6
+    400124: T_Tentacle_7
+    400126: T_Tentacle_Base
+    400128: T_Tentacle_Tip
+    400130: Upper_Body_Base
+    4300000: Infected_Body
+    4300002: R_M_Eyeball
+    4300004: R_S_Eyeball
+    4300006: L_M_Eyeball
+    4300008: L_S_Eyeball
+    9500000: //RootNode
+    13700000: Infected_Body
+    13700002: L_M_Eyeball
+    13700004: L_S_Eyeball
+    13700006: R_M_Eyeball
+    13700008: R_S_Eyeball
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
