@@ -8,13 +8,20 @@ namespace solmates {
         public static SoulPurityAction Instance;
         public Transform spawnTransform;
         private PlayerStats statsRef;
-        public static bool PureSoulMaking = false;
-        public static int maxSoulAmount = 3;
-        
+
+        [System.NonSerialized]
+        public bool PureSoulMaking = false;
+        [System.NonSerialized]
+        public int maxSoulAmount = 3;
+
+        [System.NonSerialized]
+        public int cleansouls;
+        [System.NonSerialized]
+        public bool purSoulmade = false;
+
         public int SoulWorthCount = 0;
         public int SoulWorthMaxAmount = 10;
         
-        public static bool purSoulmade = false;
         public LayerMask lmask;
         public GameObject pureSoulObj;
         public GameObject soul;
@@ -60,7 +67,7 @@ namespace solmates {
                 }
             }
 
-            PlayerStats.cleansouls -= soulcount;
+            cleansouls -= soulcount;
             SoulWorthCount = 0;
 
             purSoulmade = true;

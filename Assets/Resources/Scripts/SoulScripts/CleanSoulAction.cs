@@ -35,7 +35,7 @@ namespace solmates {
                 float dis = Vector3.Distance(transform.position, chosenFollow.position);
                 if (dis < followdisMin && !closeByFollow) {
                     closeByFollow = true;
-                    PlayerStats.cleansouls++;
+                    SoulPurityAction.Instance.cleansouls++;
                 }
             }
         }

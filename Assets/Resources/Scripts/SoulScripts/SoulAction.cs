@@ -102,7 +102,7 @@ namespace solmates {
         
         public void Cleaning() {
 
-            if (!clean && !SoulPurityAction.PureSoulMaking) {
+            if (!clean && !SoulPurityAction.Instance.PureSoulMaking) {
                 lookedAt = true;
                 anim.SetBool("looked", true);
                 AudioSource a2Source = GetComponent<AudioSource>();
